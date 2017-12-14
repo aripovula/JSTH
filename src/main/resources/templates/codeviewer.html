@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+  
+	<title>jsth | source code</title>
+        <div th:replace="fragments/header :: header-css"/>
+  
+  <!-- css customized for this page only -->
+  <style type="text/css">
+  
+  			html, body {
+			    height: 100%;
+			    margin: 0;
+			}
+			
+			#content {
+			  height: calc(100% - 50px);
+			  overflow: auto;
+			}
+			
+			.bottompanel{
+				position: fixed;
+				bottom:0px;
+				width: 100%;
+			  	height: 50px;
+			  	font-size: 14px;
+			}
+  
+  /*   CSS for split view screens  */
+  body {
+    box-sizing: border-box;    
+  }
+  
+  .split {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .content {
+    background: #222222;    
+  }
+  .gutter {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background: #666666;
+  }
+  .gutter.gutter-horizontal {
+    cursor: col-resize;
+
+  }
+  .gutter.gutter-vertical {
+    cursor: row-resize;
+
+  }
+  .split.split-horizontal, .gutter.gutter-horizontal {
+    height: 100%;
+    float: left;
+  }
+			
+
+/*  CSS for leftmost column with file names */
+			#left {
+			    float: left;
+			    top:0px;
+			    width: 200px;
+			    color:#ffffff;
+			    height: 100%;
+			    overflow: scroll;
+				border-right:5px solid #000000;
+			    
+			}
+			.right {
+			    float: left;
+			    top:0px;
+				/*border-right:0px solid transparent;
+				border-left:0px solid transparent;*/
+			    width: calc(100% - 200px);
+			    height: 100%;
+			    overflow: scroll;
+			}
+			
+			
+			ul.nav a.vb { color: #b5b5b5 !important; font-size:14px !important;}
+			ul.nav a.vb:active { background-color: #666666  !important; color: #b5b5b5 !important; }
+			ul.nav a.vb:focus { background-color: #666666  !important; color: #b5b5b5 !important; }
+			ul.nav a.vb:visited { background-color: #666666  !important; color: #b5b5b5 !important; }
+
+			ul.nav a.vb2 { color: #ffffff !important; font-size:14px !important;}
+			ul.nav a.vb2:active { background-color: #666666  !important; color: #ffffff !important; }
+			ul.nav a.vb2:focus { background-color: #666666  !important; color: #ffffff !important; }
+			ul.nav a.vb2:visited { background-color: #666666  !important; color: #ffffff !important; }
+						
+  </style>
+
+
+  
+</head>
+
+    <body>
+    	<link rel="stylesheet" type="text/css" th:href="@{/prettify2/prettify.css}"></link>
+	<link rel="stylesheet" type="text/css" th:href="@{/prettify2/skins/desertlightblue.css}"></link>
+
+	
+	<!--   Google PrettyPrint - override default only for this page  -->
+	<style type="text/css">pre.prettyprint{width:100%;margin:0;padding:0px;white-space:pre-wrap;border:0px;}</style>
+	
+
+    <div th:replace="fragments/header :: header"/>
+	<div th:replace="fragments/otherfragments :: flash"></div>
+
+
+<div id="content">
+ <div id="left">
+ <div id="leftcontent">
+ <nav>
+    <ul class="nav">
+    		<li><a class="vb2" href="javascript: showAlert();">page info</a> </li>
+        		<li><a class="vb2" href="#" id="btncol1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">*.properties &#38; *.xml<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btncol1">
+				<li id="propsSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+        
+		<li><a class="vb2" href="#" id="btncol2" data-toggle="collapse" data-target="#submenu2" aria-expanded="false">com.jsth<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu2" role="menu" aria-labelledby="btncol2">
+				<li id="mainSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+		<li><a class="vb2" href="#" id="btncol3" data-toggle="collapse" data-target="#submenu3" aria-expanded="false">com.jsth.config<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu3" role="menu" aria-labelledby="btncol3">
+				<li id="configSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+		<li><a class="vb2" href="#" id="btncol4" data-toggle="collapse" data-target="#submenu4" aria-expanded="false">com.jsth.model<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu4" role="menu" aria-labelledby="btncol4">
+				<li id="modelSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+		<li><a class="vb2" href="#" id="btncol5" data-toggle="collapse" data-target="#submenu5" aria-expanded="false">com.jsth.controller<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu5" role="menu" aria-labelledby="btncol5">
+				<li id="controllerSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+		<li><a class="vb2" href="#" id="btncol6" data-toggle="collapse" data-target="#submenu6" aria-expanded="false">com.jsth.dao<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu6" role="menu" aria-labelledby="btncol6">
+				<li id="daoSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+		<li><a class="vb2" href="#" id="btncol7" data-toggle="collapse" data-target="#submenu7" aria-expanded="false">com.jsth.service<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu7" role="menu" aria-labelledby="btncol7">
+				<li id="serviceSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+		<li><a class="vb2" href="#" id="btncol8" data-toggle="collapse" data-target="#submenu8" aria-expanded="false">com.jsth.other<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu8" role="menu" aria-labelledby="btncol8">
+				<li id="otherSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+		<li><a class="vb2" href="#" id="btncol9" data-toggle="collapse" data-target="#submenu9" aria-expanded="false">*.css &#38; *.js<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu9" role="menu" aria-labelledby="btncol9">
+				<li id="cssjsSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+		<li><a class="vb2" href="#" id="btncol10" data-toggle="collapse" data-target="#submenu10" aria-expanded="false">templates<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu10" role="menu" aria-labelledby="btncol10">
+				<li id="templateSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+		<li><a class="vb2" href="#" id="btncol11" data-toggle="collapse" data-target="#submenu11" aria-expanded="false">templates&#47;fragments<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu11" role="menu" aria-labelledby="btncol11">
+				<li id="fragmentSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+		
+	</ul>
+</nav>
+	</div>
+  </div>
+  
+  
+  
+  <div id="splits" class="right">
+  	<span id="wh"></span>
+   <div id="a" class="split split-horizontal">
+      <div id="c" class="split content">
+      	<pre id="ULSC" class="prettyprint" style="width:100%;margin:0;padding:2px;"></pre>
+      </div>
+      <div id="d" class="split content">
+      	<pre id="LLSC" class="prettyprint" style="width:100%;margin:0;padding:2px;"></pre>
+      </div>
+    </div>
+    <div id="b" class="split split-horizontal">
+      <div id="e" class="split content">
+      		<pre id="URSC" class="prettyprint" style="width:100%;margin:0;padding:2px;"></pre>
+      </div>
+      <div id="f" class="split content">
+      		<pre id="LRSC" class="prettyprint" style="width:100%;margin:0;padding:2px;"></pre>
+	   </div>
+    </div>
+  
+	</div>
+	</div>
+	
+		<div class="bottompanel" style="background: #000000;">
+			
+			<div>
+				<div  style="float: left;">
+					
+					<a id="clearfour" class="button button1" style="margin-right:20px;background:#333333; color:#eeeeee;" 
+					href="javascript: clearAll();">Clear screens</a>
+				</div>
+				
+				<div id="fourradio">
+				<div style="float: left;">	
+					    		<input type="radio" name="screen" value="TL" checked="checked" onclick="wscreen(this.value)"/>
+					    		<label id="ULR"/>
+					    <br/>
+							<input type="radio" name="screen" value="LL" onclick="wscreen(this.value)"/>
+							<label id="LLR"/>
+					    </div>
+					    <div style="float: left;">
+					    <input type="radio" name="screen" value="TR" onclick="wscreen(this.value)"/>
+					    		<label id="URR"/>
+					    <br/>
+					    		<input type="radio" name="screen" value="LR" onclick="wscreen(this.value)"/>
+					    		<label id="LRR"/>
+				</div>
+				</div>	
+				<div style="float: left;">
+				<br/>
+					<label id="onescrlabl"/>
+				</div>
+				
+				<div style="float: right;">
+					
+					<a class="button button1" href="javascript: changeCss();" style="float: right;">Change skin</a>
+					<a class="button button1" href="javascript: changeSize();" style="float: right;">Change size</a>
+					<a id="oneorfour" class="button button1" href="javascript: toggleOneOrFourB();" style="float: right;">One&nbsp;screen</a>
+									<div class="addn2" style="float: right;"><br/><a id="orspace" class="addn" style="float: right;" 
+					href="javascript: ruleAlert()"></a></div>
+				</div>
+								 
+			</div>
+		</div>
+
+	<script type="text/javascript" th:src="@{/prettify2/prettify.js}"></script>
+
+
+	<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/	
+    
+    		    	var i;
+		    	var i2; // skin #
+		    	var i3; // fontSize #
+    	
+    			var left = document.getElementById('left');
+    			
+    			var onesc = document.getElementById('ONESC');    			
+    			var ulsc = document.getElementById('ULSC');
+			var llsc = document.getElementById('LLSC');
+			var ursc = document.getElementById('URSC');
+			var lrsc = document.getElementById('LRSC');
+			
+			var ulsec = document.getElementById('c');
+			var llsec = document.getElementById('d');
+			var ursec = document.getElementById('e');
+			var lrsec = document.getElementById('f');
+
+			var ulr = document.getElementById('ULR');
+			var llr = document.getElementById('LLR');
+			var urr = document.getElementById('URR');
+			var lrr = document.getElementById('LRR');
+			
+			var props = document.getElementById("propsSec");
+			var mains = document.getElementById("mainSec");
+			var configs = document.getElementById("configSec");
+			var models = document.getElementById("modelSec");
+			var controllers = document.getElementById("controllerSec");
+			var daos = document.getElementById("daoSec");
+			var services = document.getElementById("serviceSec");
+			var others = document.getElementById("otherSec");
+			var cssjs = document.getElementById("cssjsSec");
+			var templates = document.getElementById("templateSec");
+			var fragments = document.getElementById("fragmentSec");
+
+
+			var wscrn = "TL";
+			var isSplit = true;
+			
+			
+			var single;
+			var pTag;
+ 
+    var lastOpened = 1;
+
+    	
+    	// all cards in json format
+    	var allCodeInJsonFormat = [[${allCodeInJsonFormat}]];
+    	var parsedCode = JSON.parse(allCodeInJsonFormat);
+    	
+	window.onload = function(){
+
+		doSplit();
+		    
+		    
+			PR.prettyPrint();
+
+			showCurrent(2);
+			wscrn = "LL";
+			showCurrent(23);
+			wscrn = "TR";
+			showCurrent(54);
+			wscrn = "LR";
+			showCurrent(55);
+			wscrn = "TL";
+			
+		    	i2 = 0; // skin #
+		    	i3 = 0; // fontSize #
+
+			applySize();
+			applySkin();
+			addLinks();
+			
+			var interval = setInterval(function() {
+			    if(document.readyState === 'complete') {
+			    		if ( sessionStorage.getItem("alertshown") != 1 ) showAlert();
+			    		clearInterval(interval);
+			        //done();
+					
+			    }    
+			}, 100);
+
+	}
+
+	function wscreen(scrn) {
+	    wscrn = scrn;
+	    //alert(wscrn);
+	}
+	
+function showCurrent(i) {
+	var name = parsedCode[i].name;
+	var code = parsedCode[i].content;
+	var ext = name.split('.').pop();
+	console.log('ext='+ext);
+	
+	if (name.endsWith('.html')) {
+		
+		var find = '&#60;';  var re = new RegExp(find, 'g');  code = code.replace(re, '<');
+
+		var find = '&#62;';  var re = new RegExp(find, 'g');  code = code.replace(re, '>');
+
+		var find = '&amp;';  var re = new RegExp(find, 'g');  code = code.replace(re, '&');
+		
+	}
+		
+
+	if (isSplit == true ) {
+		if ( wscrn == 'TL' && ulsc != null && ulsc !== "undefined")  { ulsc.innerHTML=PR.prettyPrintOne(code, ext); ulr.innerHTML='&nbsp;&nbsp;Upper-L : '+name+'&nbsp;&nbsp;&nbsp;&nbsp;';}
+		if ( wscrn == 'LL' && llsc != null && llsc !== "undefined")  { llsc.innerHTML=PR.prettyPrintOne(code, ext); llr.innerHTML='&nbsp;&nbsp;Lower-L : '+name+'&nbsp;&nbsp;&nbsp;&nbsp;';}
+		if ( wscrn == 'TR' && ursc != null && ursc !== "undefined")  { ursc.innerHTML=PR.prettyPrintOne(code, ext); urr.innerHTML='&nbsp;&nbsp;Upper-R : '+name+'&nbsp;&nbsp;&nbsp;&nbsp;';}
+		if ( wscrn == 'LR' && lrsc != null && lrsc !== "undefined")  { lrsc.innerHTML=PR.prettyPrintOne(code, ext); lrr.innerHTML='&nbsp;&nbsp;Lower-R : '+name+'&nbsp;&nbsp;&nbsp;&nbsp;';}
+	} else {
+		if ( pTag != null && pTag !== "undefined")  { pTag.innerHTML=PR.prettyPrintOne(code, ext); document.getElementById("onescrlabl").innerHTML = '&nbsp;&nbsp;'+name+'&nbsp;&nbsp;&nbsp;&nbsp;';}
+	}
+	
+	PR.prettyPrint();
+}
+
+function updateCode(id) {
+    showCurrent(id);
+    lastOpened = id;
+}
+
+function addLinks(){
+	for (var i=0, len = parsedCode.length; len>i; i++) {
+			
+		var aTag = document.createElement('a');
+		aTag.setAttribute('href',"javascript: updateCode('"+parsedCode[i].id+"')");
+		aTag.innerHTML = '- '+parsedCode[i].name;
+		aTag.style.fontSize = "14px";
+		aTag.className="vb";
+	
+		console.log('parsedCode[i].parent = '+ parsedCode[i].parent);
+		if ((parsedCode[i].parent.indexOf('.properties') !== -1) || (parsedCode[i].parent.indexOf('.xml') !== -1)) props.appendChild(aTag);
+		if ((parsedCode[i].name.indexOf('sthfApplication.java') !== -1) || (parsedCode[i].name.indexOf('ervletInitializer.java') !== -1)) mains.appendChild(aTag);
+		if (parsedCode[i].parent.indexOf('/config/') !== -1) configs.appendChild(aTag);
+		if (parsedCode[i].parent.indexOf('/model/') !== -1) models.appendChild(aTag);
+		if (parsedCode[i].parent.indexOf('/controller/') !== -1) controllers.appendChild(aTag);
+		if (parsedCode[i].parent.indexOf('/dao/') !== -1) daos.appendChild(aTag);
+		if (parsedCode[i].parent.indexOf('/service/') !== -1) services.appendChild(aTag);
+		if (parsedCode[i].parent.indexOf('/other/') !== -1) others.appendChild(aTag);
+		if ((parsedCode[i].parent.indexOf('/static/css/') !== -1) || (parsedCode[i].parent.indexOf('/static/js/') !== -1)) cssjs.appendChild(aTag);
+		if ((parsedCode[i].parent.indexOf('/templates/') !== -1) && (parsedCode[i].parent.indexOf('/fragments/') === -1)) templates.appendChild(aTag);
+		if ((parsedCode[i].parent.indexOf('/templates/') !== -1) && (parsedCode[i].parent.indexOf('/fragments/') !== -1)) fragments.appendChild(aTag);
+		
+	}	
+}
+
+
+function toggleOneOrFour(){
+	if (isSplit == true) {
+		if ( pTag == null || pTag === "undefined") { 
+			var dTag = document.createElement('div');
+			dTag.className="right";
+			dTag.id = "single";
+			document.getElementById("content").appendChild(dTag);
+	
+			pTag = document.createElement('pre');
+			pTag.className="prettyprint";
+			pTag.id = "ONESC";
+			pTag.style="width:100%;margin:0;padding:2px;"
+				dTag.appendChild(pTag);
+				
+		} else {
+			document.getElementById("single").style.display = "block";
+		}
+		
+		document.getElementById("splits").style.display = "none";
+		
+		document.getElementById("fourradio").style.display = "none";
+		document.getElementById("onescrlabl").style.display = "block";
+		isSplit = false;
+		showCurrent(lastOpened);
+		document.getElementById("oneorfour").innerHTML = "Four screens";
+		document.getElementById("clearfour").style.display = "none";
+		
+
+	} else {
+		document.getElementById("splits").style.display = "block";
+		document.getElementById("single").style.display = "none";
+
+		document.getElementById("fourradio").style.display = "block";
+		document.getElementById("onescrlabl").style.display = "none";
+		isSplit = true;
+
+		document.getElementById("oneorfour").innerHTML = "One&nbsp;screen";
+		document.getElementById("clearfour").style.display = "block";
+	}
+}
+
+function toggleOneOrFourB() {
+	toggleOneOrFour();
+	document.getElementById('orspace').innerHTML = "or press 'Space' button&nbsp;&nbsp;&nbsp;";
+}
+
+function clearAll() {
+	if ( ulsc != null && ulsc !== "undefined")  { ulsc.innerHTML= ""; ulr.innerHTML='&nbsp;&nbsp;Upper-L : ( none )&nbsp;&nbsp;&nbsp;&nbsp;';}
+	if ( llsc != null && llsc !== "undefined")  { llsc.innerHTML= ""; llr.innerHTML='&nbsp;&nbsp;Lower-L : ( none )&nbsp;&nbsp;&nbsp;&nbsp;';}
+	if ( ursc != null && ursc !== "undefined")  { ursc.innerHTML= ""; urr.innerHTML='&nbsp;&nbsp;Upper-R : ( none )&nbsp;&nbsp;&nbsp;&nbsp;';}
+	if ( lrsc != null && lrsc !== "undefined")  { lrsc.innerHTML= ""; lrr.innerHTML='&nbsp;&nbsp;Lower-R : ( none )&nbsp;&nbsp;&nbsp;&nbsp;';}
+
+}
+
+function showAlert() {
+	alert ("This page with four resizeable screens is designed for larger displays. Please adjust the size of each screen as needed. For smaller displays please select 'One screen' option (at bottom right ).\n\nTo code this page I combined code in three sources:\n\n- https://jsfiddle.net/h3cvm2ws/\n- https://jsfiddle.net/gstvoo/zoxqpftc/\n- http://jsfiddle.net/wQ6WQ/1/\n\n( these links are also provided in 'App summary' page )");
+	sessionStorage.setItem('alertshown', 1);
+}
+
+function changeSize() {	
+	i3 = i3 + 1;
+	if (i3>3) i3=0;
+	applySize();
+}
+
+function applySize() {
+	if (i3 == 0) {ulsc.style.fontSize = "small"; llsc.style.fontSize = "small"; ursc.style.fontSize = "small"; lrsc.style.fontSize = "small"; 
+		if (pTag != null && pTag !== "undefined")  pTag.style.fontSize = "small";
+	}
+	if (i3 == 1) {ulsc.style.fontSize = "medium";llsc.style.fontSize = "medium"; ursc.style.fontSize = "medium"; lrsc.style.fontSize = "medium"; 
+		if (pTag != null && pTag !== "undefined")  pTag.style.fontSize = "medium";
+	}
+	if (i3 == 2) {ulsc.style.fontSize = "large"; llsc.style.fontSize = "large"; ursc.style.fontSize = "large"; lrsc.style.fontSize = "large"; 
+		if (pTag != null && pTag !== "undefined")  pTag.style.fontSize = "large";
+	}
+	if (i3 == 3) {ulsc.style.fontSize = "x-large";llsc.style.fontSize = "x-large"; ursc.style.fontSize = "x-large"; lrsc.style.fontSize = "x-large"; 
+		if (pTag != null && pTag !== "undefined")  pTag.style.fontSize = "x-large";
+	}	
+	
+	applySkin();
+}
+
+function changeCss() {
+	i2 = i2 + 1;
+
+	if (i2>6) i2=0;
+	applySkin();
+}
+
+function applySkin() {
+	console.log('applySkin i2 = '+ i2);
+	var skn = ["desertlightblue", "desertlight", "desert", "sunburst", "light", "blackonwhite", "coloronwhite"];
+		var pth = /*[[@{/prettify2/skins/}]]*/;
+	   var link = '<link rel="stylesheet" type="text/css" href="'+pth+skn[i2]+'.css">';
+	   console.log('link = '+ link);
+	   document.getElementById('wh').innerHTML=link;
+	   PR.prettyPrint();
+}
+
+
+window.addEventListener("keydown", function (event) {
+	console.log('inKeyAny code='+event.keyCode);
+	console.log('inKeyAny key='+event.key);
+	
+	if (event.keyCode == 32) {
+	    	console.log('inKeyEnter');
+	    	
+	    	toggleOneOrFour();
+	    	document.getElementById('orspace').innerHTML = "";
+	    	return false;
+	}
+	
+}, true);
+
+function doSplit() {
+
+	
+	/*  this code is from
+	 * https://jsfiddle.net/h3cvm2ws/
+	 */	
+	"use strict";
+	(function(){var e=this,t="addEventListener",i="removeEventListener",s="getBoundingClientRect",n=e.attachEvent&&!e[t],r=e.document,o=function(){var e,t=["","-webkit-","-moz-","-o-"];
+	for(var i=0;i<t.length;i++){e=r.createElement("div");e.style.cssText="width:"+t[i]+"calc(9px)";
+	if(e.style.length){return t[i]+"calc"}}}(),a=function(e){if(typeof e==="string"||e instanceof String){return r.querySelector(e)}else{return e}},l=function(l,u){var c,f,p,g,h,d,z,S,y=[];
+	u=typeof u!=="undefined"?u:{};
+	if(typeof u.gutterSize==="undefined")u.gutterSize=10;
+	if(typeof u.minSize==="undefined")u.minSize=100;
+	if(typeof u.snapOffset==="undefined")u.snapOffset=30;
+	if(typeof u.direction==="undefined")u.direction="horizontal";
+	if(u.direction=="horizontal"){c="width";
+	p="clientWidth";
+	g="clientX";
+	h="left";
+	d="gutter gutter-horizontal";
+	z="paddingLeft";
+	S="paddingRight";
+	if(!u.cursor)u.cursor="ew-resize"}else if(u.direction=="vertical"){c="height";
+	p="clientHeight";
+	g="clientY";
+	h="top";
+	d="gutter gutter-vertical";
+	z="paddingTop";S="paddingBottom";
+	if(!u.cursor)u.cursor="ns-resize"}var v=function(i){var s=this,n=s.a,r=s.b;
+	if(!s.dragging&&u.onDragStart){u.onDragStart()}i.preventDefault();
+	s.dragging=true;
+	s.move=b.bind(s);
+	s.stop=m.bind(s);
+	e[t]("mouseup",s.stop);
+	e[t]("touchend",s.stop);
+	e[t]("touchcancel",s.stop);
+	s.parent[t]("mousemove",s.move);
+	s.parent[t]("touchmove",s.move);
+	n[t]("selectstart",U);
+	n[t]("dragstart",U);
+	r[t]("selectstart",U);
+	r[t]("dragstart",U);
+	n.style.userSelect="none";
+	n.style.webkitUserSelect="none";
+	n.style.MozUserSelect="none";n.style.pointerEvents="none";r.style.userSelect="none";r.style.webkitUserSelect="none";r.style.MozUserSelect="none";
+	r.style.pointerEvents="none";s.gutter.style.cursor=u.cursor;
+	s.parent.style.cursor=u.cursor;M.call(s)},m=function(){var t=this,s=t.a,n=t.b;if(t.dragging&&u.onDragEnd){u.onDragEnd()}t.dragging=false;
+	e[i]("mouseup",t.stop);e[i]("touchend",t.stop);e[i]("touchcancel",t.stop);t.parent[i]("mousemove",t.move);t.parent[i]("touchmove",t.move);
+	delete t.stop;delete t.move;s[i]("selectstart",U);s[i]("dragstart",U);n[i]("selectstart",U);n[i]("dragstart",U);s.style.userSelect="";
+	s.style.webkitUserSelect="";s.style.MozUserSelect="";s.style.pointerEvents="";n.style.userSelect="";n.style.webkitUserSelect="";n.style.MozUserSelect="";
+	n.style.pointerEvents="";t.gutter.style.cursor="";t.parent.style.cursor=""},b=function(e){var t;if(!this.dragging)return;
+	if("touches"in e){t=e.touches[0][g]-this.start}else{t=e[g]-this.start}if(t<=this.aMin+u.snapOffset){t=this.aMin}else if(t>=this.size-this.bMin-u.snapOffset){t=this.size-this.bMin}x.call(this,t);
+	if(u.onDrag){u.onDrag()}},M=function(){var t=e.getComputedStyle(this.parent),i=this.parent[p]-parseFloat(t[z])-parseFloat(t[S]);
+	this.size=this.a[s]()[c]+this.b[s]()[c]+this.aGutterSize+this.bGutterSize;this.percentage=Math.min(this.size/i*100,100);
+	this.start=this.a[s]()[h]},x=function(e){this.a.style[c]=o+"("+e/this.size*this.percentage+"% - "+this.aGutterSize+"px)";
+	this.b.style[c]=o+"("+(this.percentage-e/this.size*this.percentage)+"% - "+this.bGutterSize+"px)"},G=function(){var e=this,t=e.a,i=e.b;
+	if(t[s]()[c]<e.aMin){t.style[c]=e.aMin-e.aGutterSize+"px";
+	i.style[c]=e.size-e.aMin-e.aGutterSize+"px"}else if(i[s]()[c]<e.bMin){t.style[c]=e.size-e.bMin-e.bGutterSize+"px";
+	i.style[c]=e.bMin-e.bGutterSize+"px"}},w=function(){var e=this,t=e.a,i=e.b;if(i[s]()[c]<e.bMin){t.style[c]=e.size-e.bMin-e.bGutterSize+"px";
+	i.style[c]=e.bMin-e.bGutterSize+"px"}else if(t[s]()[c]<e.aMin){t.style[c]=e.aMin-e.aGutterSize+"px";
+	i.style[c]=e.size-e.aMin-e.aGutterSize+"px"}},E=function(e){for(var t=0;t<e.length;t++){M.call(e[t]);G.call(e[t])}for(t=e.length-1;t>=0;t--){M.call(e[t]);
+	w.call(e[t])}},U=function(){return false},D=a(l[0]).parentNode;if(!u.sizes){var k=100/l.length;
+	u.sizes=[];for(f=0;f<l.length;f++){u.sizes.push(k)}}if(!Array.isArray(u.minSize)){var L=[];for(f=0;f<l.length;f++){L.push(u.minSize)}u.minSize=L}for(f=0;
+	f<l.length;f++){var O=a(l[f]),B=f==1,F=f==l.length-1,A,C=u.gutterSize,N;
+	if(f>0){N={a:a(l[f-1]),b:O,aMin:u.minSize[f-1],bMin:u.minSize[f],dragging:false,parent:D,isFirst:B,isLast:F,direction:u.direction};
+	N.aGutterSize=u.gutterSize;N.bGutterSize=u.gutterSize;
+	if(B){N.aGutterSize=u.gutterSize/2}if(F){N.bGutterSize=u.gutterSize/2}}if(!n){if(f>0){var R=r.createElement("div");R.className=d;R.style[c]=u.gutterSize+"px";
+	R[t]("mousedown",v.bind(N));R[t]("touchstart",v.bind(N));
+	D.insertBefore(R,O);N.gutter=R}if(f===0||f==l.length-1){C=u.gutterSize/2}if(typeof u.sizes[f]==="string"||u.sizes[f]instanceof String){A=u.sizes[f]}else{A=o+"("+u.sizes[f]+"% - "+C+"px)"}}else{if(typeof u.sizes[f]==="string"||u.sizes[f]instanceof String){A=u.sizes[f]}else{A=u.sizes[f]+"%"}}O.style[c]=A;
+	if(f>0){y.push(N)}}E(y)};
+	if(typeof exports!=="undefined"){if(typeof module!=="undefined"&&module.exports){exports=module.exports=l}exports.Split=l}else{e.Split=l}}).call(window);
+
+
+	    Split(['#a', '#b'], {
+	    		sizes: [60, 40],  
+	    		gutterSize: 4,
+	      	cursor: 'col-resize',
+	    })
+	    Split(['#c', '#d'], {
+	      direction: 'vertical',
+	      sizes: [55, 45],
+	      gutterSize: 4,
+	      cursor: 'row-resize'
+	    })
+	    Split(['#e', '#f'], {
+	      direction: 'vertical',
+	      sizes: [52, 48],
+	      gutterSize: 4,
+	      cursor: 'row-resize'
+	    })
+	    
+}
+	
+    /*]]>*/
+</script>
+	
+</body>
+
+</html>
+

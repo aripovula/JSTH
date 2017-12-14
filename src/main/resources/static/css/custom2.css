@@ -1,0 +1,18 @@
+
+
+body {
+	background: #000000 !important;
+	/*background: #000000 url(macindark1.jpg) bottom right no-repeat !important;*/
+	color: #FFFFFF !important;
+	font-size:16px !important;
+	font-family: 'Assistant' !important;
+}  
+
+
+.footer{
+    position: fixed;
+    bottom: 0px;
+    left: 50px;
+	background: #000000 !important;
+	font-size: 12px;  
+}

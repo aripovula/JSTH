@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+    		<meta charset="UTF-8"/>
+        <title>jsth | select</title>
+        <div th:replace="fragments/header :: header-css"/>
+    </head>
+    <body>
+    <div th:replace="fragments/header :: header"/>
+	<div th:replace="fragments/otherfragments :: flash"></div>
+<div class="container">
+    <div class="">
+        <div class="">
+            <h3 th:text="${heading}">Custom select</h3>
+        </div>
+    </div>
+    
+    <form th:action="@{${action}}" id="transForm" method="post" th:object="${user}" >
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{username}"/>
+        		
+        	<div class="section">  
+        		<span id="labelfm" th:text="|Frameworks selected: &nbsp;|"></span><a id="fmlink" class="addn" href="javascript: toggleFm()">( click to change )</a>
+        		<span id="fmseln"></span>
+        	</div>
+        	
+        	<div id="fm0">
+			<a class="addn" href="javascript: clearAllFms()"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ( clear all )</a>
+			<div class="" th:classappend="${#fields.hasErrors('frameworkSeln')}? 'error' : ''">
+				<table>
+			    		<span th:each="top, iterStat : ${frameworks}" th:remove="tag">
+			        			<span th:if="${iterStat.first}" th:remove="tag">
+			        				<span th:remove="tag" th:utext="${begincolumn}"></span>
+			        			</span>
+			        			
+			        			<!--  change number of colums needed here, currently 2 columns  -->
+			        			<span th:if="${iterStat.index % 2 == 0}" th:remove="tag">
+			        				<span th:remove="tag" th:utext="|${endcolumn}  ${begincolumn}|"></span>
+			        			</span>
+			        			
+			        			<th>
+			        				<span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+			        				<input type="checkbox" th:field="*{frameworkSeln}"  th:value="${top.id}"/>
+			        				<label th:id="'fmlabl' + ${top.id}" th:text=" | &nbsp; ${top.name} |">Something is wrong !</label>
+							</th>
+			        			
+			        			<span th:remove="tag" th:if="${iterStat.last}" >
+			        				<span th:remove="tag" th:utext="${endcolumn}"></span>
+			        			</span>
+			
+			        		</span>
+			        	</table>
+		        	<div class="fieldWarning" th:if="${#fields.hasErrors('frameworkSeln')}" th:errors="*{frameworkSeln}"></div>
+		    </div>
+		</div>	
+		<div id="warnfm" class="fieldWarning">&nbsp; &nbsp; &nbsp; &nbsp;Please select at least one framework</div>
+        
+		<div class="section">    
+	        <span class="pendingField" id="label0">Please select origin of cards: &nbsp;</span>
+	        <span class="" th:classappend="${#fields.hasErrors('onlymycards')}? 'error' : ''">
+	        		<span th:each="typ : ${origins}">
+	        			<input type="radio" th:field="*{onlymycards}"  th:value="${typ.id}"/><label th:text="| &nbsp; ${typ.name}  &nbsp; &nbsp;|">Something is wrong !</label>
+	        		</span>
+	        		<div id="warn0a" class="fieldWarning">Origin of cards is not selected</div>
+	        </span>
+        </div>
+
+		<div class="section">
+	        <span class="pendingField" id="label1">Please select type of cards: &nbsp;</span>
+	        <span class="" th:classappend="${#fields.hasErrors('cardTypeSeln')}? 'error' : ''">
+	        		<span th:each="typ : ${typeoptions}">
+	        			<input type="radio" th:field="*{cardTypeSeln}"  th:value="${typ.id}"/><label th:text="| &nbsp; ${typ.name}  &nbsp; &nbsp;|">Something is wrong !</label>
+	        		</span>
+	        		<div id="warn1a" class="fieldWarning">Type of cards is not selected</div>
+	        </span>
+	        
+		</div>
+		<div class="section">
+	        <span class="pendingField" id="label2">Please select sort options: &nbsp;</span>
+	        <span class="" th:classappend="${#fields.hasErrors('randomNotSeln')}? 'error' : ''">
+	        		<span th:each="typ : ${sortoptions}">
+	        			<input type="radio" th:field="*{randomNotSeln}"  th:value="${typ.id}"/><label th:text="| &nbsp; ${typ.name}  &nbsp; &nbsp;|">Something is wrong !</label>
+	        		</span>
+	        		<div id="warn2a" class="fieldWarning">Sort option is not selected</div>
+	        </span>
+		</div>
+	        
+	    <div class="section">
+	        <span class="pendingField" id="label3">Load the card type(s) selected above as follows: &nbsp;</span>
+			        <div class="" th:classappend="${#fields.hasErrors('loadTypeSeln')}? 'error' : ''">
+			        <table>
+			        		<span th:each="top, iterStat : ${loadoptions}" th:remove="tag">
+			        			<span th:if="${iterStat.first}" th:remove="tag">
+			        				<span th:remove="tag" th:utext="${begincolumn}"></span>
+			        			</span>
+			        			
+			        			<!--  change number of colums needed here, currently 3 columns  -->
+			        			<span th:if="${iterStat.index % 3 == 0}" th:remove="tag">
+			        				<span th:remove="tag" th:utext="|${endcolumn}  ${begincolumn}|"></span>
+			        			</span>
+			        			
+			        			<th>
+			        				<span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+			        				<input type="radio" th:field="*{loadTypeSeln}"  th:value="${top.id}"/>
+			        				<label th:text=" | &nbsp; ${top.name} &nbsp; &nbsp; |">Something is wrong !</label>
+							</th>
+			        			
+			        			<span th:remove="tag" th:if="${iterStat.last}" >
+			        				<span th:remove="tag" th:utext="${endcolumn}"></span>
+			        			</span>
+			
+			        		</span>
+			        	</table>
+		        	<div class="fieldWarning" th:if="${#fields.hasErrors('loadTypeSeln')}" th:errors="*{loadTypeSeln}"></div>
+		    </div>
+		    </div>
+		    
+			<div class="section" id="keyword1">
+				<p class="pendingField"  id="label4">Please type the keyword to search: &nbsp;</p>
+		        <div th:classappend="${#fields.hasErrors('keywordSeln')}? 'error' : ''">
+		            <div class="">
+		                <input type="text" th:field="*{keywordSeln}" style="width:600px;" placeholder="Tags:"/>
+		                <div class="fieldWarning" th:if="${#fields.hasErrors('keywordSeln')}" th:errors="*{keywordSeln}"></div>
+		            </div>
+		        </div>			
+			</div>
+			
+			<div class="section" id="tags4">
+
+	        		<span class="pendingField"  id="label5a"> Match rule: &nbsp;</span>
+	        		<span th:each="typ : ${tagmatch}">
+	        			<input style="font-size:14px;" type="radio" th:field="*{tagsMatch}"  th:value="${typ.id}"/><label th:text="| &nbsp; ${typ.name}  &nbsp; &nbsp;|">Something is wrong !</label>
+	        		</span>
+	        					
+				<p class="pendingField section"  id="label5">Please select tag(s)<a class="addn" href="javascript: clearAllTags()"> &nbsp; &nbsp; ( clear all )</a></p>
+			        <table>
+			        		<span th:each="top, iterStat : ${tags}" th:remove="tag">
+			        			<span th:if="${iterStat.first}" th:remove="tag">
+			        				<span th:remove="tag" th:utext="${begincolumn}"></span>
+			        			</span>
+			        			
+			        			<!--  change number of colums needed here, currently 3 columns  -->
+			        			<span th:if="${iterStat.index % 3 == 0}" th:remove="tag">
+			        				<span th:remove="tag" th:utext="|${endcolumn}  ${begincolumn}|"></span>
+			        			</span>
+			        			
+			        			<th>
+			        				<span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+			        				<input type="checkbox" th:field="*{tagsSeln}"  th:value="${top}"/>
+			        				<label th:text=" | &nbsp; ${top} &nbsp; &nbsp; &nbsp; &nbsp; |">Something is wrong !</label>
+							</th>
+			        			
+			        			<span th:remove="tag" th:if="${iterStat.last}" >
+			        				<span th:remove="tag" th:utext="${endcolumn}"></span>
+			        			</span>
+			
+			        		</span>
+			        	</table>
+		    </div>
+		
+			<div class="section" id="tags4a">
+	        		<span class="pendingField"  id="label5b">Sort rule: &nbsp;</span>
+	        		<span th:each="typ : ${tagrule}">
+	        			<input type="radio" th:field="*{tagsRule}"  th:value="${typ.id}"/><label th:text="| &nbsp; ${typ.name}  &nbsp; &nbsp; |">Something is wrong !</label>
+	        		</span>
+	        		<span class="addn2">&nbsp; &nbsp; (choose one only if you select 2 or more tags)</span>
+			
+			</div>
+				
+		
+		<div id="topicSec" class="section">
+			<p id="label6" class="pendingField">Please select a topic *<a class="addn" href="javascript: clearAllTopics()"> &nbsp; &nbsp; ( clear all )</a></p>
+			<p class="addn2">( these topics were adjusted to selected frameworks, amend frameworks to display more or less topics )</p>
+	        <div class="" th:classappend="${#fields.hasErrors('topicsSeln')}? 'error' : ''">
+	        		<div th:each="top : ${topics}">
+	        			<div th:id="'topicpiece' + ${top.id}">
+	        				<input type="checkbox" th:field="*{topicsSeln}"  th:value="${top.id}"/>
+	        				<label th:text="| &nbsp; ${top.name}|"></label><label class="addn2" th:text="|&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;${top.framework}&nbsp;) |">Something is wrong !</label>
+	        			</div>
+	        		</div>
+	        	<div class="fieldWarning" th:if="${#fields.hasErrors('topicsSeln')}" th:errors="*{topicsSeln}"></div>
+	        </div>
+        </div>
+			
+		
+        	<div id="riskSec" class="section">        
+	        <p class="pendingField"  id="label7">Please select a risk<a class="addn" href="javascript: clearAllRisks()"> &nbsp; &nbsp; ( clear all )</a></p>
+	        
+	        <p class="addn2">( these risks were adjusted to selected topics, amend topics to display more or less risks )</p>
+	        	<p id="riskLab" class="section">( no associated risks are found )</p>
+	        <div class="" th:classappend="${#fields.hasErrors('risksSeln')}? 'error' : ''">
+	        		<div th:each="typ : ${risks}">
+	        			<div th:id="'riskpiece' + ${typ.id}">
+	        				<input type="checkbox" th:field="*{risksSeln}"  th:value="${typ.id}"/>
+	        				<label th:text="| &nbsp; ${typ.name}|">a risk</label>
+	        			</div>
+	        		</div>
+	        		<div id="warnrisk" class="fieldWarning" th:if="${#fields.hasErrors('risksSeln')}" th:errors="*{risksSeln}"></div>
+	        </div>
+	     </div>
+		
+			
+	        <div class="section">
+	            <div class="">
+	                <a href="javascript:window.location = document.referrer;" class="button button2">Cancel</a>
+	                <span style="display:inline-block; width: 10px;"></span>
+	                <button th:text="${submit}" type="submit" class="button button1">Upload</button>
+	            </div>
+	        </div>
+			<br/><br/><br/>				
+    </form>
+    
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    	 
+    	
+    	var fm0 = document.getElementById("fm0");
+    	var fm0shown = false;
+    	
+    	// all topics in json format
+    	var topicsjsn = [[${topicsjsn}]];
+    	var parsedTopics = JSON.parse(topicsjsn);
+    	
+    	// all risk in json format
+    	var risksJsn = [[${risksjsn}]];
+    	var parsedRisks = JSON.parse(risksJsn);
+
+    	var cardframeworks='';
+    	var fmsseln = '';
+    	
+	window.onload = function(){
+		fm0.style.display = "none"; fm0shown = false;	
+		unhideSelected();
+			checkLabels();
+			checkKeyword();
+
+			updateTopics();
+		}
+	
+	// main elements
+	var frameworkSeln = document.forms['transForm'].elements['frameworkSeln'];
+	var onlymycards = document.forms['transForm'].elements['onlymycards'];
+	var cardTypeSeln = document.forms['transForm'].elements['cardTypeSeln'];
+	var randomNotSeln = document.forms['transForm'].elements['randomNotSeln'];
+    var loadTypeSeln = document.forms['transForm'].elements['loadTypeSeln'];
+    var keywordSeln = document.forms['transForm'].elements['keywordSeln'];
+    var tagsSeln = document.forms['transForm'].elements['tagsSeln'];
+    var tagsMatch = document.forms['transForm'].elements['tagsMatch'];
+    var tagsRule = document.forms['transForm'].elements['tagsRule'];
+    var topicsSeln = document.forms['transForm'].elements['topicsSeln'];
+    var risksSeln = document.forms['transForm'].elements['risksSeln'];
+    
+    // other params
+    var tagsChosen = 0;
+    var doneColor = "#ffffff";
+    var allFms = 0;
+    var allFmsPrev = 0;
+
+    // label elements
+    var fmseln = document.getElementById("fmseln");
+    var label0 = document.getElementById("label0");
+    var label1 = document.getElementById("label1");
+    var label2 = document.getElementById("label2");
+    var label3 = document.getElementById("label3");
+    var label4 = document.getElementById("label4");
+    var label5 = document.getElementById("label5");
+    var label5a = document.getElementById("label5a");
+    var label5b = document.getElementById("label5b");
+    var label6 = document.getElementById("label6");
+    var label7 = document.getElementById("label7");
+    
+    // hidden elements
+    var warnfm = document.getElementById("warnfm"); warnfm.style.display = "none";
+    var warn0a = document.getElementById("warn0a"); warn0a.style.display = "none";
+    var warn1a = document.getElementById("warn1a"); warn1a.style.display = "none";
+    var warn2a = document.getElementById("warn2a"); warn2a.style.display = "none";
+    var risklab = document.getElementById("riskLab"); risklab.style.display = "none";
+    
+   	var choice1 = document.getElementById("keyword1");
+    var choice4 = document.getElementById("tags4");
+    var choice4a = document.getElementById("tags4a");
+    var choice5 = document.getElementById("topicSec");
+    var choice6 = document.getElementById("riskSec");	
+
+	function unhideSelected(){ 
+		if (document.getElementById('loadTypeSeln2').checked) {choice1.style.display = "block";} else {choice1.style.display = "none";}
+		if (document.getElementById('loadTypeSeln5').checked) 
+				{choice4.style.display = "block"; countTags();} else {choice4.style.display = "none";choice4a.style.display = "none";}
+		if (document.getElementById('loadTypeSeln6').checked) {choice5.style.display = "block";} else {choice5.style.display = "none";}
+		if (document.getElementById('loadTypeSeln7').checked) {choice6.style.display = "block";} else {choice6.style.display = "none";}
+
+	}
+   
+	// counts # of tags ticked to show / remove Sort rule radio buttons 
+	function countTags(){
+		tagsChosen = 0;
+	    if ( tagsSeln != null && tagsSeln !== "undefined") {
+			for (var i=0, len = tagsSeln.length; len>i; i++) {
+		    		var ftg = i+1;
+		    		var tg = "tagsSeln" + ftg;
+		    		if (document.getElementById(tg).checked) {tagsChosen = tagsChosen + 1;}			
+			}
+	    } else {
+	    		label5.innerHTML = "No tags are defined";
+	    }
+	    if (tagsChosen >= 1 ) {	label5.style.color = doneColor; } else { label5.style.color = '#f2d768'; }
+		if (tagsChosen >= 2 ) {	choice4a.style.display = "block"; } 
+		else {choice4a.style.display = "none";}
+	}
+	
+    function updateTopics(){
+		console.log("in updateTopics fmsseln="+fmsseln);
+	    	
+    		for (var i6 = 0; i6 < parsedTopics.length; i6++) {
+	    		var ii6 = parsedTopics[i6].id;
+	    		if (cardframeworks.indexOf(','+parsedTopics[i6].framework+',') !== -1) {
+	    			document.getElementById('topicpiece'+ii6).style.display = "block";
+	    		} else {
+	    			// to prevent incorrect submission when a box is ticked and framework changed to another one within one submission unchecks all hidden
+	    			topicsSeln[i6].checked = false;
+	    			document.getElementById('topicpiece'+ii6).style.display = "none";
+	    		}  
+	    	}
+    }
+	
+	function checkLabels(){
+		
+		if ( parsedRisks != null && parsedRisks !== "undefined") {
+			for (var i7 = 0; i7 < parsedRisks.length; i7++) {
+				ii7 = parsedRisks[i7].id;
+		    		var rpiece = document.getElementById('riskpiece'+ii7);
+		    		if ( rpiece != null && rpiece !== "undefined") rpiece.style.display = "none";
+			}
+		}
+
+		var i8 = 0;
+
+		var elem = ["onlymycards", "cardTypeSeln", "randomNotSeln", "loadTypeSeln", "tagsSeln", "tagsMatch", "tagsRule", "topicsSeln", "risksSeln", "frameworkSeln"];
+		var labl = ["label0", "label1", "label2", "label3", "label5", "label5a", "label5b", "label6", "label7", "labelfm"];
+		allFmsPrev = allFms;
+		allFms = 0;
+		for (var iy=0; iy<10; iy++) {
+			var i3 = 0;
+			fmsseln = '';
+			cardframeworks = ",";
+			
+			var elm = document.forms['transForm'].elements[elem[iy]];
+			if ( elm != null && elm !== "undefined") {
+				for (var i2=0, len = elm.length; len>i2; i2++) {
+			    		var ftg = i2+1;
+			    		var tg = elem[iy] + ftg;
+			    		if (document.getElementById(tg).checked) {
+			    			i3 = i3 + 1;
+			    			var an = document.getElementById(labl[iy]);
+			    			if ( an != null && an !== "undefined") an.style.color = doneColor;
+			    			if (iy==0) warn0a.style.display = "none";
+			    			if (iy==1) warn1a.style.display = "none";
+				    		if (iy==2) warn2a.style.display = "none";
+				    		if (iy==3) checkFirstThree();
+			    			if (iy==7) {
+			    				var curTop = ','+parsedTopics[i2].id+',';
+			    				if ( parsedRisks != null && parsedRisks !== "undefined") {
+				    				for (var i7 = 0; i7 < parsedRisks.length; i7++) {
+					    				var ii7 = parsedRisks[i7].id;
+					    				var topInd = parsedRisks[i7].topic;
+					    				topInd = topInd.replace("[", "");
+					    				topInd = topInd.replace("]", "");
+					    				topInd = topInd.replace(" ", "");
+					    				topInd = ','+topInd+',';
+					    				
+						    	    		if (topInd.indexOf(curTop) !== -1) {
+						    	    			i8 = i8 + 1;
+						    		    		var rpiece = document.getElementById('riskpiece'+ii7);
+						    		    		if ( rpiece != null && rpiece !== "undefined") rpiece.style.display = "block";
+						    	    		}
+					    			}
+			    				}
+			    			}
+				    		if (iy==9) {
+				    			allFms = allFms + 1; 
+				    			warnfm.style.display = "none"; 
+				    			var ab = document.getElementById('fmlabl'+i2).textContent; 
+				    			fmsseln = fmsseln + ab.trim() +'&nbsp; ; &nbsp; &nbsp;';
+			    				cardframeworks = cardframeworks + ab.trim()+",";
+				    		}
+			    		}
+			    		
+			    		if (i3 == 0) {
+			    			var an = document.getElementById(labl[iy]);
+			    			if ( an != null && an !== "undefined") an.style.color = '#f2d768';
+			    			if (iy==9) {
+			    				warnfm.style.display = "block"; 
+			    				fmseln.innerHTML = '&nbsp; ( none )'; 
+			    				if ( allFms == 0 ) {fm0.style.display = "block"; fm0shown = true; console.log("allFms2 ="+allFms); }
+			    			}
+			    		} else if ( iy==9 && fmseln != null && fmseln !== "undefined" ) {
+			    			fmseln.innerHTML = '&nbsp; &nbsp; '+fmsseln;
+			    		}
+				}
+			}
+		}
+		if (allFms>0 && allFmsPrev == allFms) {
+			fm0.style.display = "none"; 
+			fm0shown = false;			
+		}
+	    	if (i8>0) {  document.getElementById('riskLab').style.display = "none";document.getElementById('riskSec').style.display = "block";  }
+	    	else {  document.getElementById('riskLab').style.display = "block";document.getElementById('riskSec').style.display = "none";  } 
+
+	}
+		
+	function checkFirstThree(){
+		if (document.getElementById('onlymycards1').checked || document.getElementById('onlymycards2').checked) {} 
+			else {warn0a.style.display = "block";}
+		if (document.getElementById('cardTypeSeln1').checked || document.getElementById('cardTypeSeln2').checked 
+				|| document.getElementById('cardTypeSeln3').checked) {} else {warn1a.style.display = "block";}
+		if (document.getElementById('randomNotSeln1').checked || document.getElementById('randomNotSeln2').checked 
+				|| document.getElementById('randomNotSeln3').checked) {} else {warn2a.style.display = "block";}
+	}
+	
+	function checkKeyword(){
+		if (keywordSeln.value.length > 0) { label4.style.color = doneColor; } else { label4.style.color = '#f2d768'; }
+	}
+	
+	function toggleFm(){
+		if (fm0shown) { fm0.style.display = "none"; fm0shown = false; }
+		else { fm0.style.display = "block"; fm0shown = true; }
+	}
+	
+	function clearAllFms(){
+	    for (var i=0, len = frameworkSeln.length; len>i; i++) { 
+	    		var ii2 = i + 1;
+	    		frameworkSeln[ii2].checked = false;
+		}
+	    labelfm.style.color = '#f2d768';
+	    warnfm.style.display = "block";
+	    fmseln.innerHTML = ' ( none )';
+	}
+
+	function clearAllTopics(){
+	    for (var i=0, len = topicsSeln.length; len>i; i++) { 
+			topicsSeln[i].checked = false;
+		}
+	    label6.style.color = '#f2d768';
+	}
+
+	function clearAllTags(){
+		if ( tagsSeln != null && tagsSeln !== "undefined") {
+			for (var i=0, len = tagsSeln.length; len>i; i++) { 
+		    		tagsSeln[i].checked = false;
+			}
+		}
+	    label6.style.color = '#f2d768';
+	    countTags();
+	}
+
+	function clearAllRisks(){
+	    for (var i=0, len = risksSeln.length; len>i; i++) { 
+	    		risksSeln[i].checked = false;
+		}
+	    label7.style.color = '#f2d768';
+	}
+	
+	function updateFrameworkAndOther(){
+		checkLabels();
+		updateTopics();
+	}
+
+
+(function() {
+    
+    for (var i=0, len = loadTypeSeln.length; len>i; i++) {
+    		loadTypeSeln[i].onclick = function() {
+    			unhideSelected();
+    			checkFirstThree();
+    			label3.style.color = doneColor;
+    			window.scrollBy(0, 150);
+    			if (allFms>0) {
+    				fm0.style.display = "none"; 
+    				fm0shown = false;			
+    			}
+
+    		}; 
+    }
+
+    if ( tagsSeln != null && tagsSeln !== "undefined") {
+	    for (var i=0, len = tagsSeln.length; len>i; i++) {
+			tagsSeln[i].onclick = countTags;
+		}
+    }
+
+    for (var i=0, len = frameworkSeln.length; len>i; i++) { 
+    		frameworkSeln[i].onclick = updateFrameworkAndOther;
+	}
+
+    for (var i=0, len = onlymycards.length; len>i; i++) { 
+    		onlymycards[i].onclick = checkLabels;
+	}
+
+    for (var i=0, len = cardTypeSeln.length; len>i; i++) { 
+		cardTypeSeln[i].onclick = checkLabels;
+	}
+
+    for (var i=0, len = randomNotSeln.length; len>i; i++) { 
+    		randomNotSeln[i].onclick = checkLabels;
+	}
+    
+    for (var i=0, len = topicsSeln.length; len>i; i++) { 
+		topicsSeln[i].onclick = checkLabels;
+	}
+
+    for (var i=0, len = risksSeln.length; len>i; i++) { 
+		risksSeln[i].onclick = checkLabels;
+	}
+
+    for (var i=0, len = tagsMatch.length; len>i; i++) { 
+    		tagsMatch[i].onclick = checkLabels;
+	}
+
+    for (var i=0, len = tagsRule.length; len>i; i++) { 
+		tagsRule[i].onclick = checkLabels;
+	}
+
+    keywordSeln.onkeyup = function(){
+    	    checkKeyword();
+    }
+
+
+}());
+
+    /*]]>*/
+</script>
+
+
+</body>
+<footer>
+	<div th:replace="fragments/footer :: footer"/>
+</footer>
+
+</html>

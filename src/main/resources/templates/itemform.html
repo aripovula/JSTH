@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+    		<meta charset="UTF-8"/>
+        <title>jsth | card form</title>
+        <div th:replace="fragments/header :: header-css"/>
+    </head>
+    
+    <body>
+	    <div th:replace="fragments/header :: header"/>
+	    <div th:replace="fragments/otherfragments :: flash"></div>
+		<div class="container">
+
+	    <div class="">
+	        <h3 th:text="${heading}">Upload</h3>
+	            <a class="addn" data-toggle="collapse" data-target="#demo">Show / hide rules</a>
+	            <div id="demo" class="collapse" th:text="${addrule}" style="white-space: pre-wrap;font-size:14px;">
+			</div>
+        </div>
+    
+    <form id="cardform" th:action="@{${action}}" method="post" th:object="${fcexitem}" >
+    		<input type="hidden" th:field="*{id}"/>
+    		<input type="hidden" th:field="*{user}"/>
+
+		<div th:unless="${fcexitem.user} == ${currentuser}">
+			<p style="background-color:#ac4343; color:#f2e2e2; text-align:center; padding:8px 8px; border-radius:4px;">You do not have edit rights on this card !</p>
+		</div>
+		
+        <div class="section">
+        		<p id="pq" class="pendingField">Question text *</p>
+            <div class="" th:classappend="${#fields.hasErrors('first')}? 'error' : ''">
+                <textarea id="First" th:field="*{first}" style="width:100%; height:140px;" placeholder="" onkeyup="javascript: forLablQ()"></textarea>
+                <div id="warnq" class="fieldWarning" th:if="${#fields.hasErrors('first')}" th:errors="*{first}"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+        		<p id="pa" class="pendingField">Answer text *</p>
+            <div class="" th:classappend="${#fields.hasErrors('second')}? 'error' : ''">
+                <textarea id="Second" th:field="*{second}" style="width:100%; height:140px;" placeholder="" onkeyup="javascript: forLablA()"></textarea>
+                <div id="warna" class="fieldWarning" th:if="${#fields.hasErrors('second')}" th:errors="*{second}"></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <p id="ptag">Tags ( optional ): <span class="addn2"> &nbsp; &nbsp;( can be used to efficiently sort / search cards )</span></p>
+            <input id="Tag" style="width:50%;" type="text" th:field="*{tag}" 
+            		placeholder=" no space in one tag, separate tags with comma"/>            		
+        </div>
+
+        <div class="section">        
+	        <p  id="ptype" class="pendingField">Please select card type *</p>
+	        <div class="" th:classappend="${#fields.hasErrors('type')}? 'error' : ''">
+	        		<span th:each="typ : ${fctypes}">
+	        			<input type="radio" th:field="*{type}"  th:value="${typ.id}"/><label th:text="| &nbsp; ${typ.name}  &nbsp; &nbsp; &nbsp;|">Something is wrong !</label>
+	        		</span>
+	        		<div id="warntype" class="fieldWarning" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
+	        </div>
+	     </div>
+               	
+       	    <div id="fm0" class="section">
+       	    <p  id="pfmw" class="pendingField">Please select framework(s) to which this card is related *
+			<a class="addn" href="javascript: clearAllFms()"> &nbsp; &nbsp; ( clear all )</a></p>
+			<div class="" th:classappend="${#fields.hasErrors('frameworkSeln')}? 'error' : ''">
+				<table>
+			    		<span th:each="top, iterStat : ${frameworks}" th:remove="tag">
+			        			<span th:if="${iterStat.first}" th:remove="tag">
+			        				<span th:remove="tag" th:utext="${begincolumn}"></span>
+			        			</span>
+			        			
+			        			<!--  change number of colums needed here, currently 2 columns  -->
+			        			<span th:if="${iterStat.index % 2 == 0}" th:remove="tag">
+			        				<span th:remove="tag" th:utext="|${endcolumn}  ${begincolumn}|"></span>
+			        			</span>
+			        			
+			        			<th>
+			        				<span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+			        				<input type="checkbox" th:field="*{frameworkSeln}"  th:value="${top.id}"/>
+			        				<label th:id="'fmlabl' + ${top.id}" th:text=" | &nbsp; ${top.name} |">Something is wrong !</label>
+							</th>
+			        			
+			        			<span th:remove="tag" th:if="${iterStat.last}" >
+			        				<span th:remove="tag" th:utext="${endcolumn}"></span>
+			        			</span>
+			
+			        		</span>
+			        	</table>
+		        	<div class="fieldWarning" th:if="${#fields.hasErrors('frameworkSeln')}" th:errors="*{frameworkSeln}"></div>
+		    </div>
+		</div>	
+		<div id="warnfm" class="fieldWarning">Please select at least one framework</div>
+		
+		<div id="topicSec" class="section">
+			<p id="ptopic" class="pendingField">Please select a topic *<a class="addn" href="javascript: clearAllTopics()"> &nbsp; &nbsp; ( clear all )</a></p>
+	        <div class="" th:classappend="${#fields.hasErrors('topic')}? 'error' : ''">
+	        		<div th:each="top : ${topics}">
+	        			<div th:id="'topicpiece' + ${top.id}">
+	        				<input type="checkbox" th:field="*{topic}"  th:value="${top.id}"/>
+	        				<label th:text="| &nbsp; ${top.name}|"></label><label class="addn2" th:text="|&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;${top.framework}&nbsp;) |">Something is wrong !</label>
+	        			</div>
+	        		</div>
+	        	<div class="fieldWarning" th:if="${#fields.hasErrors('topic')}" th:errors="*{topic}"></div>
+	        </div>
+        </div>
+                	
+        	<p id="riskLab" class="section">( no associated risks are found )</p>
+        	<div id="riskSec" class="section">        
+	        <p>Please select a risk ( optional )</p>
+	        
+	        <div class="" th:classappend="${#fields.hasErrors('risk')}? 'error' : ''">
+	        		<div th:each="typ : ${risks}">
+	        			<div th:id="'riskpiece' + ${typ.id}">
+	        				<input type="radio" th:field="*{risk}"  th:value="${typ.id}"/><label th:text="| &nbsp; ${typ.name}|">a risk</label>
+	        			</div>
+	        		</div>
+	        		<div id="warnrisk" class="fieldWarning" th:if="${#fields.hasErrors('risk')}" th:errors="*{risk}"></div>
+	        </div>
+	     </div>
+        	
+        	
+        <div class="section">
+        		<div th:if="${fcexitem.user} == ${currentuser}">
+	            <button th:text="${submit}" type="submit" class="button button1">Upload</button>
+	            <span style="display:inline-block; width: 10px;"></span>
+	            <a href="javascript:window.location = document.referrer;" class="button button2">Cancel</a>
+            </div>
+        </div>
+    </form>
+    
+    <br/>
+	<div class="" th:if="${fcexitem.id != null}">
+            <div th:if="${fcexitem.user} == ${currentuser}">
+			    <form onSubmit="if(!confirm('Do you really want to delete this card ?')){return false;}" th:action="@{|/fcexitems/${fcexitem.id}/delete|}" method="post">
+                		<button type="submit" class="button button2">Delete</button>
+        		    </form>
+			</div>
+			<br/>              
+    </div>
+    <br/><br/>                 
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    	
+	var topicSec = document.getElementById("topicSec");
+	var riskSec = document.getElementById("riskSec");
+	
+	var cardframeworks='';
+
+	// all topics and risks in json format
+	var topicsjsn = [[${topicsjsn}]];
+	var parsedTopics = JSON.parse(topicsjsn);
+	
+	var risksJsn = [[${risksjsn}]];
+	var parsedRisks = JSON.parse(risksJsn);
+	
+	// main elements
+    var type = document.forms['cardform'].elements['type'];
+    var frameworkseln = document.forms['cardform'].elements['frameworkSeln'];
+    var topic = document.forms['cardform'].elements['topic'];
+    var risk = document.forms['cardform'].elements['risk'];
+    var warnq = document.getElementById("warnq");
+    var warna = document.getElementById("warna");
+    var warntype = document.getElementById("warntype");
+    var warnfm = document.getElementById("warnfm");
+    
+    // other params
+    var doneColor = "#ffffff";
+
+    // label elements
+    var ptype = document.getElementById("ptype");
+    var ptopic = document.getElementById("ptopic");
+
+	window.onload = function(){
+				
+		forLablQ();
+		forLablA();
+		checkLabels();
+		updateTopics();
+		
+	}
+	
+	
+    function updateTopics(){
+
+	    	var tcall = 0; 
+    		for (var i6 = 0; i6 < parsedTopics.length; i6++) {
+	    		var ii6 = parsedTopics[i6].id;
+	    		if (cardframeworks.indexOf(','+parsedTopics[i6].framework+',') !== -1) {
+	    			document.getElementById('topicpiece'+ii6).style.display = "block";
+	    		} else {
+	    			// to prevent incorrect submission when a box is ticked and framework changed to another one within one submission unchecks all hidden
+	    			topic[i6].checked = false;
+	    			document.getElementById('topicpiece'+ii6).style.display = "none";
+	    			tcall = tcall + 1;
+	    		}  
+	    	}
+	    	if ( tcall == parsedTopics.length )  { topicSec.style.display = "none"; } else { topicSec.style.display = "block"; }
+    }
+
+	function checkLabels(){
+
+		if ( parsedRisks != null && parsedRisks !== "undefined") {
+			for (var i7 = 0; i7 < parsedRisks.length; i7++) {
+				ii7 = parsedRisks[i7].id;
+		    		var rpiece = document.getElementById('riskpiece'+ii7);
+		    		if ( rpiece != null && rpiece !== "undefined") rpiece.style.display = "none";
+			}
+		}
+
+		var i8 = 0;
+
+		var elem = ["type", "topic", "frameworkSeln"];
+		var labl = ["ptype", "ptopic", "pfmw"];
+		for (var iy=0; iy<3; iy++) {
+			var i3 = 0; 
+			cardframeworks = ",";
+			for (var i2=0, len = document.forms['cardform'].elements[elem[iy]].length; len>i2; i2++) {
+		    		var ftg = i2+1;
+		    		var tg = elem[iy] + ftg;
+		    		
+		    		if (document.getElementById(tg).checked) {
+		    			i3 = i3 + 1;
+		    			var an = document.getElementById(labl[iy]);
+		    			if ( an != null && an !== "undefined") an.style.color = doneColor;
+		    			if (iy == 0 ) {	if ( warntype != null && warntype !== "undefined") warntype.style.display = "none"; }
+		    			
+		    			if (iy==1) {
+		    				console.log("in checkLabels iy==1 elem="+document.forms['cardform'].elements[elem[iy]]);
+		    				var curTop = ','+parsedTopics[i2].id+',';
+		    				if ( parsedRisks != null && parsedRisks !== "undefined") {
+			    				for (var i7 = 0; i7 < parsedRisks.length; i7++) {
+				    				var ii7 = parsedRisks[i7].id;
+				    				var topInd = parsedRisks[i7].topic;
+				    				topInd = topInd.replace("[", "");
+				    				topInd = topInd.replace("]", "");
+				    				topInd = topInd.replace(" ", "");
+				    				topInd = ','+topInd+',';
+				    				
+				    				console.log('topInd-'+topInd+'  curTop-'+curTop);
+				    				console.log('condi: '+topInd.indexOf(curTop));
+					    	    		if (topInd.indexOf(curTop) !== -1) {
+					    	    			i8 = i8 + 1;
+					    		    		var rpiece = document.getElementById('riskpiece'+ii7);
+					    		    		console.log('ii7='+ii7);
+					    		    		if ( rpiece != null && rpiece !== "undefined") rpiece.style.display = "block";
+					    	    		}
+				    			}
+		    				}
+		    			}
+		    			if ( iy == 2 ) {	
+		    				
+			    			var ab = document.getElementById('fmlabl'+i2).textContent;
+		    				cardframeworks = cardframeworks + ab.trim()+",";
+		    				console.log('cardframeworks = '+cardframeworks);
+		    				if ( warnfm != null && warnfm !== "undefined") warnfm.style.display = "none"; 
+		    			}
+	
+		    		}
+		    		if (i3 == 0) {
+		    			var an = document.getElementById(labl[iy]);
+		    			if ( an != null && an !== "undefined") an.style.color = '#f2d768';
+		    			if ( iy==2 && warnfm != null && warnfm !== "undefined") warnfm.style.display = "block";
+		    		}
+
+			}
+		}
+	    	if (i8>0) {  document.getElementById('riskLab').style.display = "none";document.getElementById('riskSec').style.display = "block";  }
+	    	else {  document.getElementById('riskLab').style.display = "block";document.getElementById('riskSec').style.display = "none";  } 
+	    	console.log("SelnValue="+frameworkseln);
+
+	}
+	
+	
+	function forLablQ(){
+		var x = document.getElementById("First").value;
+		if (x.length>0) {pq.style.color = doneColor; if ( warnq != null && warnq !== "undefined") warnq.style.display = "none";} else {pq.style.color = '#f2d768';}
+
+	}
+
+	function forLablA(){
+		var x = document.getElementById("Second").value;
+		if (x.length>0) {pa.style.color = doneColor; if ( warna != null && warna !== "undefined") warna.style.display = "none";} else {pa.style.color = '#f2d768';}
+	}
+
+	function clearAllFms(){
+	    for (var i=0, len = frameworkseln.length; len>i; i++) { 
+	    		frameworkseln[i].checked = false;
+	    		updateFrameworkAndOther();
+		}
+	    pfmw.style.color = '#f2d768';
+	    warnfm.style.display = "block";
+	}
+
+	function clearAllTopics(){
+	    for (var i=0, len = topic.length; len>i; i++) { 
+			topic[i].checked = false;
+		}
+	    for (var i=0, len = risk.length; len>i; i++) { 
+			risk[i].checked = false;
+		}
+	    ptopic.style.color = '#f2d768';
+	    document.getElementById('riskLab').style.display = "block";
+	    document.getElementById('riskSec').style.display = "none"; 
+	}
+	
+	function updateFrameworkAndOther(){
+		checkLabels();
+		updateTopics();
+	}
+   
+(function() {
+    
+    for (var i=0, len = type.length; len>i; i++) { 
+		type[i].onclick = checkLabels;
+	}
+
+    for (var i=0, len = frameworkseln.length; len>i; i++) { 
+    		frameworkseln[i].onclick = updateFrameworkAndOther;
+	}
+
+    for (var i=0, len = topic.length; len>i; i++) { 
+		topic[i].onclick = checkLabels;
+}
+
+        
+}());
+
+    /*]]>*/
+</script>
+
+</body>
+<footer>
+	<div th:replace="fragments/footer :: footer"/>
+</footer>
+
+</html>

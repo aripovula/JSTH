@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>jsth | home</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="refresh" content="1; url=/welcome">
+        <script type="text/javascript">
+            window.location.href = "/welcome"
+        </script>
+        <style>
+	        html {
+	        background: #466368;
+  			background: linear-gradient(to right bottom, #484848, #202020);
+  			border-radius: 6px; height: 100%;
+  			}
+  			h1, p{
+  			font-family: 'DejaVu Sans', Arial, Helvetica;
+  			color:white;
+  			margin: 20px, 20px,20px, 20px;
+  			}
+        </style>
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+
+ <p>If you are not redirected automatically, please click <a href='/welcome'>here</a>.</p>
+    </body>
+</html>

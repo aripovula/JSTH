@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>jsth | risk form</title>
+        <div th:replace="fragments/header :: header-css"/>
+    </head>
+    <body>
+        	<div th:replace="fragments/header :: header"/>
+		<div th:replace="fragments/otherfragments :: flash"></div>
+		<div class="container">
+    		<form id="riskform" th:action="@{${action}}" method="post" th:object="${risk}">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{user}"/>
+
+		<div th:unless="${risk.user} == ${currentuser}">
+			<p style="background-color:#ac4343; color:#f2e2e2; text-align:center; padding:8px 8px; border-radius:4px;">You do not have edit rights on this risk !</p>
+		</div>
+
+        <div class="">
+            <div class="">
+                <h3 th:text="${heading}">New Risk</h3>
+            </div>
+        </div>
+        
+        <div class="section">
+        		<p id="prisk" class="pendingField">Risk description *</p>
+            <div class="" th:classappend="${#fields.hasErrors('name')}? 'error' : ''">
+                <textarea id="RiskD" th:field="*{name}" style="width:100%; height:140px;" placeholder="" onkeyup="javascript: forLablR()"></textarea>
+                <div id="warnr" class="fieldWarning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+        </div>
+
+        <div class="section">
+        		<span>Please select a framework: </span>
+        		<span style="display:inline-block; width: 10px;"></span>
+            <span class="">
+                <select id="soflow" th:field="*{frameworkId}" class="">
+                    <option th:each="cat : ${frameworks}" th:value="${cat.id}" th:text="${cat.name}" style="color:#59b3b3">Framework Not Specified</option>
+                </select>
+            </span>  
+        </div>
+       	
+		<div id="topicSec" class="section">
+			<p id="ptopic" class="pendingField">Please select a topic *<a class="addn" href="javascript: clearAllTopics()"> &nbsp; &nbsp; ( clear all )</a></p>
+	        <div class="" th:classappend="${#fields.hasErrors('topic')}? 'error' : ''">
+	        		<div th:each="top : ${topics}">
+	        			<div th:id="'topicpiece' + ${top.id}">
+	        				<input type="checkbox" th:field="*{topic}"  th:value="${top.id}"/>
+	        				<label th:text="| &nbsp; ${top.name}|">Something is wrong !</label>
+	        			</div>
+	        		</div>
+	        	<div class="fieldWarning" th:if="${#fields.hasErrors('topic')}" th:errors="*{topic}"></div>
+	        </div>
+        </div>
+        
+        <div class="section">
+            <div th:if="${risk.user} == ${currentuser}">
+                <button th:text="${submit}" class="button button1">Add</button>
+                <span style="display:inline-block; width: 10px;"></span>
+                <a th:href="@{/risks}" class="button button2">Cancel</a>
+            </div>
+        </div>
+    </form>
+        
+    <div class="section" th:if="${risk.id != null}">
+            	<div th:if="${risk.user} == ${currentuser}">
+			    <form onSubmit="if(!confirm('Do you really want to delete this risk ?')){return false;}" th:action="@{|/risks/${risk.id}/delete|}" method="post">
+                		<button type="submit" class="button button2">Delete</button>
+        		    </form>
+			</div>
+     </div>
+     <br/><br/>
+            
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    	
+	var topicSec = document.getElementById("topicSec");
+	
+	// all cards in json format
+	var topicsjsn = [[${topicsjsn}]];
+	var parsedTopics = JSON.parse(topicsjsn);
+
+	var sof = document.getElementById("soflow");
+	var frameworkseln = sof.options[sof.selectedIndex].text;
+	
+	// main elements
+    var topic = document.forms['riskform'].elements['topic'];
+    var warnr = document.getElementById("warnr");
+    
+    // other params
+    var doneColor = "#ffffff";
+
+    // label elements
+    var ptopic = document.getElementById("ptopic");
+
+	window.onload = function(){
+		
+		updateTopics();
+
+		forLablR();
+		checkLabels();
+	}
+	
+	
+    function updateTopics(){
+	    	for (var i6 = 0; i6 < parsedTopics.length; i6++) {
+	    		if (parsedTopics[i6].framework == frameworkseln) {
+	    			document.getElementById('topicpiece'+i6).style.display = "block";
+	    		} else {
+	    			// to prevent incorrect submission when a box is ticked and framework changed to another one within one submission unchecks all hidden
+	    			topic[i6].checked = false;
+	    			document.getElementById('topicpiece'+i6).style.display = "none";
+	    		}  
+	    	}
+    }
+    
+	function checkLabels(){
+		var elem = ["topic"];
+		var labl = ["ptopic"];
+		for (var iy=0; iy<1; iy++) {
+			var i3 = 0;
+			for (var i2=0, len = document.forms['riskform'].elements[elem[iy]].length; len>i2; i2++) {
+		    		var ftg = i2+1;
+		    		var tg = elem[iy] + ftg;
+		    		if (document.getElementById(tg).checked) {
+		    			i3 = i3 + 1;
+		    			var an = document.getElementById(labl[iy]);
+		    			if ( an != null && an !== "undefined") an.style.color = doneColor;
+		    		}
+		    		if (i3 == 0) {
+		    			var an = document.getElementById(labl[iy]);
+		    			if ( an != null && an !== "undefined") an.style.color = '#f2d768';
+		    		}
+
+			}
+		}
+	}
+	
+	function forLablR(){
+		var x = document.getElementById("RiskD").value;
+		
+		if (x.length>0) {prisk.style.color = doneColor; if ( warnr != null && warnr !== "undefined") warnr.style.display = "none";} else {prisk.style.color = '#f2d768';}
+
+	}
+
+	function clearAllTopics(){
+	    for (var i=0, len = topic.length; len>i; i++) { 
+			topic[i].checked = false;
+		}
+	    ptopic.style.color = '#f2d768';
+	}
+	
+   
+	(function() {
+	    	
+	    for (var i=0, len = topic.length; len>i; i++) { 
+	    		topic[i].onclick = checkLabels;
+		}
+	    
+	    sof.onchange = function() {
+	        var index = this.selectedIndex;
+	        frameworkseln = this.children[index].innerHTML.trim();
+	        console.log(frameworkseln);
+	        updateTopics();
+	    }
+	
+	        
+	}());
+
+    /*]]>*/
+</script>
+
+</body>
+<footer>
+	<div th:replace="fragments/footer :: footer"/>
+</footer>
+</html>

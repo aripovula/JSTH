@@ -1,0 +1,298 @@
+
+
+body {
+	background: #222222 !important;
+	color: #FFFFFF !important;
+	font-size:16px !important;
+	font-family: 'Assistant' !important;
+	padding: 45px 0 0 0;
+}  
+
+h1,h2,h3,h4,h5,h6{
+	margin-top: 20px;
+  	margin-bottom: 10px;
+  	color:#2f9eff;
+}
+
+* {
+	border-radius: 0px;
+}
+
+.stand14{
+	font-size:12px !important;
+	color:#ffffff;
+}
+
+/* MENU */
+.navbar {
+      background: #000000;
+      border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.navbar-brand {
+    color: #ffffff  !important;
+}
+
+.navbar .nav > li > a {
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    color:  #ddd;
+}
+
+/* to change nav bar height */
+.navbar-nav > li > a, .navbar-brand {
+    padding-top:5px !important; padding-bottom:0 !important;
+    height: 36px;
+}
+.navbar {min-height:36px !important;}
+
+/* to make nav bar height change to work on mobiles */
+.navbar-toggle {
+     padding: 0 0;
+     margin-top: 7px;
+     margin-bottom: 0;
+}
+
+ul.nav a:hover { background-color: #666666  !important; color: #ffffff !important; }
+
+/* BUTTONS */
+
+.btn {
+	border-radius: 0px;
+}
+
+
+.button {
+   
+    border: none;
+    color: white;
+    padding: 6px 14px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button1 {
+    background-color: #e7e7e7; 
+    color: black;
+}
+
+.button1:hover {
+    background-color: white;
+    color: #99cc33;
+}
+    
+.button2 {
+    background-color: #e7e7e7; 
+    color: black;
+}
+
+.button2:hover {
+    background-color: white;
+    color: #ff6600;
+}
+
+/* ANCHORS */
+
+a{
+	color: #000000;
+	text-decoration: none;
+}
+
+a:link{
+	color: #000000;
+	text-decoration: none;
+}
+
+a:visited{
+	color: #000000;
+	text-decoration: none;
+}
+
+a:hover{
+	color: #99cc33;
+	transition-duration: 0.4s;
+	text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+a.lnk{
+	color: #ffffff;
+	text-decoration: none;
+}
+
+a.lnk:link{
+	color: #ffffff;
+	text-decoration: none;
+}
+
+a.lnk:visited{
+	color: #ffffff;
+	text-decoration: none;
+}
+
+a.lnk:hover{
+	color: #99cc33;
+	transition-duration: 0.4s;
+	text-decoration: none;
+}
+
+a.lnk:active {
+    text-decoration: none;
+}
+
+
+a.lists{
+	color: #ffffff;
+}
+
+a.lists:link {
+    text-decoration: none;
+}
+
+a.lists:visited {
+    text-decoration: none;
+}
+
+a.lists:hover {
+    text-decoration: none;
+}
+
+a.lists:active {
+    text-decoration: none;
+}
+
+a.addn{
+	color: #b5b5b5;
+	font-size: 12px;
+}
+
+a.addn:link {
+    text-decoration: none;
+}
+
+a.addn:visited {
+    text-decoration: none;
+}
+
+a.addn:hover {
+    	color: #99cc33;
+	transition-duration: 0.4s;
+	font-size: 12px;
+}
+
+a.addn:active {
+    text-decoration: none;
+}
+
+.addn2{
+	color: #919191;
+	font-size: 12px;
+}
+
+/*  INPUTS   */
+
+input, textarea{
+	font-size: 16px;
+	color: #000000;
+	border-radius: 0px;
+}
+
+/* select option*/
+
+select#soflow, select#soflow-color, select#soflowf, select#soflowf-color, select#soflowr, select#soflowr-color {
+   font-size: 16px;
+   overflow: hidden;
+   white-space: nowrap;
+   width: 400px;
+   color: #000000;
+}
+
+/*  FLASH MESSAGES */
+
+.flash {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 8px 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    text-align: center;
+    -webkit-transition-duration: 0.8s; /* Safari */
+    transition-duration: 0.8s;
+    width: 100%;
+}
+
+.flash.success {
+    background-color: #7f9e40;
+    color: #f3f6ee;
+}
+
+.flash.failure {
+    background-color: #ac4343;
+    color: #f2e2e2;
+}
+
+
+/*  OTHERS  */
+
+.oneline {
+	width: 100%;
+	white-space: nowrap; 
+	overflow: hidden;
+}
+
+.bottompanel{
+	position: fixed;
+	bottom:0px;
+	width: 100%;
+}
+
+
+/* Carousel */
+
+.tales {
+  width: 50%;
+}
+.carousel-inner{
+  width:450px !important;
+  max-height: 150px !important;
+}
+
+.carousel-indicators li { visibility: hidden; }
+
+/* warning messages  */
+
+.fieldWarning {
+    	font-size: 14px;
+    	color: #cd5c5c;
+    	
+  	padding: 4px 4px 4px 4px;
+}
+
+.pendingField {	
+	color: #f2d768;
+}
+
+.section{
+	padding-top:15px !important; 
+}
+
+.footer{
+    position: fixed;
+    bottom: 0px;
+    left: 50px;
+	background: #222222 !important;
+	font-size: 12px;  
+}
+

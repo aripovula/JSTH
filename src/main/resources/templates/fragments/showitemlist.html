@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+</head>
+ <body>
+
+<div th:fragment="showitemlist (criterVal2, subhead, forlabl)">
+        <div id="subtitle" th:if="${subhead} != ''"><span th:text="|${subhead}: |"></span><br/><br/></div>
+        
+        <div th:each="fcexitem : ${fcexitems}">
+            <div th:if="${fcexitem.type} == ${criterVal2}">
+                <p class="oneline" th:text="|Q: &nbsp; ${fcexitem.first}|" th:name="${forlabl}"></p>
+                <p class="oneline" th:text="|A:  &nbsp; ${fcexitem.second}|"></p>
+                <div class="addn2 oneline">
+                		<span class="addn2"><a class="addn" th:href="@{|/fcexitem/${fcexitem.id}|}">View</a> | </span>
+					<span th:if="${fcexitem.user} == ${currentuser}">
+						<span class="addn2"><a class="addn" th:href="@{|/fcexitems/${fcexitem.id}/edit|}">Edit Card</a></span>
+	                </span>
+	                <span th:unless="${fcexitem.user} == ${currentuser}">
+						<span class="addn2"><a class="addn" href="javascript: alert('You can only edit cards added by you !');">Read only</a></span>
+	                </span>
+	                <span class="addn2" th:text="' | ID: ' + ${fcexitem.id}"></span>
+	                <span class="addn2"> | Framework:</span>
+	                <span th:each="frameworkId : ${fcexitem.frameworkSeln}">
+						<span th:switch="${frameworkId}">
+							<span th:each="fw : ${frameworks}">
+								<span th:case="${fw.id}" th:text="${fw.name} +'&nbsp; ; &nbsp;'"></span>
+							</span>    			
+				    		</span>
+	                </span>
+	                <span class="addn2" th:text="' | Tags: ' + ( (${fcexitem.tag} == '')? ' none' : ${fcexitem.tag})"></span>
+                </div>
+				<br/>
+        		</div>
+    		</div>
+    		<div style="color:#f2d768" th:id="${forlabl} + 'notext' "/>
+    		<br/>
+</div>
+
+
+</body>
+</html>

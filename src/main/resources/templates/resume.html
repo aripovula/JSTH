@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<title>jsth | resum&#233;</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<div th:replace="fragments/header :: header-css"/>
+
+<link rel="stylesheet" th:href="@{/css/forresume.css}" href="../css/forresume.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+body, html {
+    height: 100%;
+    color: #777;
+    line-height: 1.8;
+}
+
+/* Create a Parallax Effect */
+.bgimg-1, .bgimg-2, .bgimg-3 {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* First image (Logo. Full height) */
+.bgimg-1 {
+    /*background-image: url('/jsth/images/R1.jpg');*/
+    min-height: 100%;
+}
+
+/* Second image (Portfolio) */
+.bgimg-2 {
+    /*background-image: url('/jsth/images/car1.jpg');*/
+    min-height: 400px;
+}
+
+/* Third image (Contact) */
+.bgimg-3 {
+    /*background-image: th:url("@{/images/Cincinnati.jpg}");*/
+    min-height: 400px;
+}
+
+.fr1-wide {letter-spacing: 10px;}
+.fr1-hover-opacity {cursor: pointer;}
+
+/* Turn off parallax scrolling for tablets and phones */
+@media only screen and (max-device-width: 1024px) {
+    .bgimg-1, .bgimg-2, .bgimg-3 {
+        background-attachment: scroll;
+    }
+}
+</style>
+<body>
+<div th:replace="fragments/header :: header"/>
+
+<!-- First Parallax Image with Logo Text -->
+<div class="bgimg-1 fr1-display-container fr1-opacity-min" id="home" th:style="'background-image:url(' + @{/images/R0.jpg} + ');'">
+  <div class="fr1-display-middle" style="white-space:nowrap;">
+    <span class="fr1-center fr1-padding-large fr1-black fr1-xlarge fr1-wide fr1-animate-opacity"><span class="fr1-hide-small">resum&#233;</span></span>
+  </div>
+</div>
+
+<!-- Container (About Section) -->
+<div class="fr1-content fr1-container fr1-padding-64" id="about">
+  <h3 class="fr1-center">ABOUT ME</h3>
+  <p class="fr1-center"><em>I love coding - loved since high school</em></p>
+  <p>As a developer, I have been coding all sorts of web-sites and desktop applications. I have worked as part of a larger team in developing applications for our clients. I was always eager to learn new things and I am a fast learner.</p>
+  <div class="fr1-row">
+    <div class="fr1-col m6 fr1-center fr1-padding-large">
+      <p><b><i class="fa fa-user fr1-margin-right"></i>Ulugbek ( ULA ) Aripov</b></p><br/>
+      <img th:src="@{/images/me.jpg}" class="fr1-round fr1-image fr1-opacity fr1-hover-opacity-off" alt="Photo of Me" width="500" height="333"/>
+    </div>
+
+    <!-- Hide this text on small devices -->
+    <div class="fr1-col m6 fr1-hide-small fr1-padding-large">
+    <br/>
+    <br/>
+      <p>Up to date, I have software development experience gained in another country. Recently I became a lawful permanent resident in the United States.</p>
+      <p>And now, I am willing to expose myself to a more challenging work environment - a software development company in the USA. </p>
+      <p>I am looking for an entry-level position in a software development company and hope to be involved in development of Java &amp; Spring based applications.</p>
+      <p>I am fluent in English language and I do not need a work permit to work in the United States. I am flexible to move to other parts of the United States !</p>
+
+
+ 
+    </div>
+  </div>
+  <p class="fr1-large fr1-center fr1-padding-16">Rate of enjoyment from doing work in a specific area:</p>
+  <p><i class="fa fa-laptop"></i> Back end development - Java &amp; Spring</p>
+  <div class="fr1-light-grey">
+    <div class="fr1-container fr1-padding-small fr1-dark-grey fr1-center" style="width:100%">100%</div>
+  </div>
+  <p><i class="fa fa-laptop"></i> Full-stack development</p>
+  <div class="fr1-light-grey">
+    <div class="fr1-container fr1-padding-small fr1-dark-grey fr1-center" style="width:90%">90%</div>
+  </div>
+  <p><i class="fa fa-laptop"></i> Front end development</p>
+  <div class="fr1-light-grey">
+    <div class="fr1-container fr1-padding-small fr1-dark-grey fr1-center" style="width:75%">75%</div>
+  </div>
+</div>
+
+
+
+<!-- Second Parallax Image with Experience Text -->
+<div class="bgimg-2 fr1-display-container fr1-opacity-min" th:style="'background-image:url(' + @{/images/car1.jpg} + ');'">
+  <div class="fr1-display-middle">
+    <span class="fr1-xxlarge fr1-text-white fr1-wide">EXPERIENCE</span>
+  </div>
+</div>
+
+<!-- Container (Portfolio Section) -->
+<div class="fr1-content fr1-container fr1-padding-64" id="portfolio">
+  <h3 class="fr1-center">MORE DETAILS</h3>
+  <p class="fr1-center"><em>Here is some more info on my knowledge and experience</em></p><br/>
+
+  <h5 class="fr1-center">Oracle certifications:</h5>
+  
+  <p class="fr1-center section"><i class="fa fa-certificate"></i> I am an Oracle certified Java programmer ( OCA - Oracle Exam # 1z0 - 808, passed at first attempt )</p>
+  <p class="fr1-center section"><i class="fa fa-certificate"></i> I am about to schedule my Oracle certified Professional Java programmer exam ( OCP - Oracle Exam # 1z0 - 809 )</p>
+  <p class="fr1-center"><i class=""></i> ( this web-app is partially created to help me to get prepared for this exam. In my local database of cards I have around 2000 flashcards and example codes on Java 8 and other advanced areas )</p>
+  <br/>
+  <h5 class="fr1-center section">Other recent and relevant courses / certifications:</h5>
+  
+  <p class="fr1-center section" style="color:#fff28d"> Treehouse Techdegree courses: </p>
+  <p class="fr1-center section"><i class="fa fa-certificate"></i> I have completed all 17 courses leading to Treehouse's &nbsp;'Java Web Development'&nbsp; Techdegree</p>
+  <p class="fr1-center"><i class=""></i> Those included:</p>
+
+  <p class="fr1-center">
+  	<i class="fa fa-cube"></i> Java Lambdas<span style="display:inline-block; width: 40px;"></span><i class="fa fa-cube"></i> Java Annotations
+  	<span style="display:inline-block; width: 40px;"></span><i class="fa fa-cube"></i> Unit Testing a Spring Application
+  </p>
+    <p class="fr1-center">
+  	<i class="fa fa-cube"></i> User Authentication in Spring<span style="display:inline-block; width: 40px;"></span><i class="fa fa-cube"></i> Hibernate Basics
+  	<span style="display:inline-block; width: 40px;"></span><i class="fa fa-cube"></i> Deploying a Spring Application
+  </p>
+    
+  <p class="fr1-center"><i class=""></i> ( I did not go on with the projects required for Techdegree because I had to spend from 3 months to 1 year and</p>
+  <p class="fr1-center">projects completed during that time would be assessed by peer students - I found all this not efficient )</p>
+  
+  <p class="fr1-center section" style="color:#fff28d"> Udemy courses: </p>
+  <p class="fr1-center section"><i class="fa fa-certificate"></i> Servlets and JSPs Tutorial: Learn Web Applications With Java</p>
+  <p class="fr1-center"><i class=""></i> ( 64 video lectures ( 10 hours ) by John Purcell, also covers JSTL )</p>
+
+  <p class="fr1-center section"><i class="fa fa-certificate"></i> The Java Spring Tutorial: Learn Java's Popular Web Framework</p>
+  <p class="fr1-center"><i class=""></i> ( 176 video lectures ( 28 hours ) by John Purcell, also covers Hibernate, JSON and AJAX )</p>
+
+  <p class="fr1-center section"><i class="fa fa-certificate"></i> Spring &amp; Hibernate for Beginners</p>
+  <p class="fr1-center"><i class=""></i> ( 440 video lectures ( 28.5 hours ) by Chad Darby, also covers Hibernate, Spring Security and Spring AOP )</p>
+
+  <p class="fr1-center section"><i class="fa fa-certificate"></i> Mastering Thymeleaf with Spring Boot</p>
+  <p class="fr1-center"><i class=""></i> ( 64 video lectures ( 4.5 hours ) by John Thompson )</p>
+   
+   <br/>
+  <h5 class="fr1-center section">Work experience:</h5>
+  
+  <p class="fr1-center section"><i class="fa fa-laptop"></i>&nbsp; March 2015 to present  -   Smile Mobile, LLC, Java programmer ( Uzbekistan, part of former Soviet Union - working remotely from the USA )</p>
+  <p class="fr1-center section"><i class="fa fa-laptop"></i>&nbsp; July 2006 to Feb. 2015  -   PwC ( worked in offices in Moscow, Russia; Ljubljana, Slovenia and Tashkent, Uzbekistan ), various positions including Applications testing</p>
+   
+</div>
+
+
+<!-- Third Parallax Image with Portfolio Text -->
+<div class="bgimg-3 fr1-display-container fr1-opacity-min" th:style="'background-image:url(' + @{/images/Cincinnati.jpg} + ');'">
+  <div class="fr1-display-middle">
+     <span class="fr1-xxlarge fr1-text-white fr1-wide">CONTACT</span>
+  </div>
+</div>
+
+<!-- Container (Contact Section) -->
+<div class="fr1-content fr1-container fr1-padding-64" id="contact">
+  <h3 class="fr1-center">WHERE I LIVE</h3>
+  <p class="fr1-center"><em>I would consider relocation within the United States !</em></p>
+<br/>
+  <div class="fr1-center fr1-section">
+    <div class="fr1-center fr1-panel">
+      <div class="fr1-large fr1-margin-bottom">
+        <i class="fa fa-map-marker fa-fw fr1-hover-text-blue fr1-xlarge fr1-center"></i> Greater Cincinnati ( Mason ), Ohio, US<br/>
+        <a class="addn" href="https://www.google.com/maps/dir/NY/Mason,+OH" target="_blank"> &nbsp; ( click here to view in Google Maps [ compared to New York ] )</a><br/><br/>
+        <i class="fa fa-phone fa-fw fr1-hover-text-black fr1-xlarge fr1-center"></i> Phone: 513 370 46 41<br/><br/>
+        <i class="fa fa-envelope fa-fw fr1-hover-text-black fr1-xlarge fr1-center"></i>
+         Email: ulugbeks@gmail.com<br/><a class="addn" href="mailto:ulugbeks@gmail.com"> &nbsp; ( click here to e-mail me using your default e-mail client )</a>  <br/>
+      </div>
+      <p>Available for an interview over a cup of <i class="fa fa-coffee"></i> ,&nbsp; or via Skype</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="fr1-center fr1-black fr1-padding-64 fr1-opacity fr1-hover-opacity-off">
+  <a href="#home" class="fr1-button fr1-light-grey"><i class="fa fa-arrow-up fr1-margin-right"></i>To the top</a>
+</footer>
+ 
+</body>
+</html>
+

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>jsth | app summary</title>
+        <div th:replace="fragments/header :: header-css"/>
+        <!--link rel="stylesheet" th:href="@{/css/custom2.css}" href="../../css/custom2.css" /-->
+    </head>
+	<body>
+    		<div th:replace="fragments/header :: header"/>
+		<div class="container">
+				<!--img class="pgimg" src="../images/macindark1.jpg" alt="" border="0" style="position: fixed;right: 0px;bottom: 0px;z-index:-2;"/-->	
+	        <h3>App summary:</h3>	        
+	        <br/>
+			<p class="section">In developing the app's 'back end' followings were used:</p>
+				<div id="div1" style="display:none;">
+			        <ul>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Java 8 ( Java 8 Stream was used as often as practicable )<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Spring BOOT ( 1.5.8 )<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Spring MVC<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Spring Session<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Spring Security <br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  JPA, Hibernate<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  MySQL<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Google gson ( for generating data in JSON format )<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Maven<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Eclipse Oxygen<br/>				         
+
+			         </ul>
+			   	</div>
+			   	<div id="div2" style="display:none;">
+					<p class="section">The spring.datasource.tomcat.connection is used to ensure that any character is properly stored using UTF-8 encoding</p>
+					<p class="section">In developing the app's 'front end' followings were used:</p>
+				</div>
+				<div id="div3" style="display:none;">
+			        <ul>
+			        		 <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Thymeleaf<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Bootstrap 3<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Bootstrap smart menus ( responsive menu )<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Javascript, including JSON parsing and dynamic creation and binding of DOM elements<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  JQuery was used for animations<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Googles' Code Prettify library ( https://github.com/google/code-prettify ) was used to display any source code, flashcards and example code<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Other resources / libraries were used to create 'Personal info' ( resum&#233; ) page and source code viewer with resizable split screens<br/>
+			         </ul>
+			         </div>
+			         
+			<p class="section">This app is NOT a copy / paste of an existing application. 
+	        It was developed by me ( I deployed Spring BOOT app and added all classes and templates myself ).</p>
+	        <p class="section">Earlier,  I developed a Java Swing based version of the same app and decided to develop it as an MVC app.</p>
+	        <p class="section">Images of my Java Swing (GUI) based app's main pages are shown below.</p>
+	        
+	        <p class="section">I used following tutorial to incorporate Spring Security into the application ( clickable ):</p>- 
+	        <a class="lnk" target="_blank" href="https://medium.com/@gustavo.ponce.ch/spring-boot-spring-mvc-spring-security-mysql-a5d8545d837d">Spring Security - example code</a>
+	        
+	        <br/>
+			<p class="section">To code page for viewing source code of this application ( next option in menu section 'About' ) I combined code in three sources ( clickable ):</p>-
+			<a class="lnk" target="_blank" href="https://jsfiddle.net/h3cvm2ws/">page with four resizable screens</a><br/>- 
+			<a class="lnk" target="_blank" href="https://jsfiddle.net/gstvoo/zoxqpftc/">Bootstrap vertical multi-level menu</a>, and<br/>- 
+			<a class="lnk" target="_blank" href="http://jsfiddle.net/wQ6WQ/1/">two vertical scrollable divs</a>
+	        <br/>
+	        <p class="section">( links to other pages of StackOverflow and other sites that have helped me in developing this app are provided after two images below )</p>
+	        <p class="section">Images of my Java Swing (GUI) based app's main pages :</p>
+	        <p class="section">( as can be seen in image below I have around 2000 flashcards and example codes already added in my local database to improve my knowledge of Java and related frameworks and to get prepared for my Oracle certified Java Professional certification exam [ Java OCP &nbsp; - &nbsp;  Oracle exam # 1z0 - 809 ] )</p>      
+			         
+			<div class="section">
+				<div class="item active">
+					<img th:src="@{/images/OCPscreen.png}" alt="" width="1000" height="544" border="0" style="padding-right: 40px;"/>
+				</div>
+				<br/>
+				<div class="item">
+					<img th:src="@{/images/OCPscreenAdd.png}" alt="" width="1000" height="544" border="0" style="padding-right: 40px;"/>
+				</div>
+					    
+			</div>
+			<br/>
+			<p class="section">Links to other pages of StackOverflow and other sites that have helped me in developing this app ( clickable ) :</p>-
+			<a class="lnk" target="_blank" href="https://stackoverflow.com/questions/248562/when-using-spring-security-what-is-the-proper-way-to-obtain-current-username-i">proper way to obtain current username</a><br/>- 
+			<a class="lnk" target="_blank" href="http://www.baeldung.com/csrf-thymeleaf-with-spring-security">CSRF Protection with Spring MVC and Thymeleaf</a><br/>- 
+			<a class="lnk" target="_blank" href="https://stackoverflow.com/a/35309194/6332774">better way of defining 'application.properties'</a><br/>-
+			
+			<a class="lnk" target="_blank" href="https://docs.spring.io/spring-boot/docs/current/reference/html/howto-security.html">effect of switching off the Spring Boot security configuration</a><br/>-
+			<a class="lnk" target="_blank" href="https://stackoverflow.com/a/35309194/6332774">set up Hibernate using only 'application.properties'</a><br/>-
+			<a class="lnk" target="_blank" href="https://stackoverflow.com/questions/30870146/transactional-annotation-not-working-in-spring-boot">clarification re using @Transactional</a><br/>-
+			<a class="lnk" target="_blank" href="https://codingexplained.com/coding/java/spring-framework/return-boolean-value-from-spring-data-jpa-query">to check if User table exists - returning boolean from a @Query</a>
+						
+			<br/><br/>
+	        <br/><br/>
+	        
+	</div>
+ 
+    <script type="text/javascript">
+		$(document).ready(function () {
+			
+	        $("#div1").fadeIn();
+	        $("#div2").fadeIn(2000);
+	        $("#div3").fadeIn(3000);
+
+		    $('.carousel').carousel({
+		        interval: 6000
+		    });
+		
+		    $('.carousel').carousel('cycle');
+		    
+
+		});
+	</script> 
+
+    </body>
+    <footer>
+		<div th:replace="fragments/footer :: footer"/>
+	</footer>
+</html>

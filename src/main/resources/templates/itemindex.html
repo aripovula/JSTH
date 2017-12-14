@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>jsth | list of cards</title>
+        <div th:replace="fragments/header :: header-css"/>
+        
+        <!-- css customized for this page -->
+        <style type="text/css">
+			
+			#content, html, body {
+			    height: 100%;
+			}
+			#left {
+			    float: left;
+			    top:0px;
+			    width: 20%;
+			    /*background: #eee;*/
+			    color:#ffffff;
+			    height: 100%;
+			    overflow: scroll;
+				border-right:5px solid #000000;
+			    
+			}
+			#right {
+			    float: left;
+			    top:0px;
+				border-right:40px solid transparent;
+				border-left:20px solid transparent;
+			    width: 80%;
+			    height: 100%;
+			    overflow: scroll;
+			}
+			
+			
+			ul.nav a.vb { color: #ffffff !important; font-size:14px !important;}
+			ul.nav a.vb:active { background-color: #666666  !important; color: #ffffff !important; }
+			ul.nav a.vb:focus { background-color: #666666  !important; color: #ffffff !important; }
+			ul.nav a.vb:visited { background-color: #666666  !important; color: #ffffff !important; }
+			
+  </style>
+    </head>
+    
+    <body>
+    <div th:replace="fragments/header :: header"/>
+	<div th:replace="fragments/otherfragments :: flash"></div>
+
+	<!--div class="container"-->
+	
+	<div id="content">
+  <div id="left">
+
+	<form th:action="@{/search}" id="keywordForm" method="get">
+	    <div class="input-group">
+	      <input name="qword" type="search" class="form-control" placeholder="Search" required="required" autocomplete="off"/>
+	      <div class="input-group-btn">
+	        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+	      </div>
+	    </div>
+  </form>
+
+
+<nav>
+    <ul class="nav">
+	    <li><a class="vb" th:href="@{/flashcards}">Flashcards</a></li>
+        <li><a class="vb" th:href="@{/examples}">Example code cards</a></li>
+        <li><a class="vb" th:href="@{/allcards}">All cards</a></li>
+        <li><a class="vb" th:href="@{/mycards}">All my cards</a></li>
+        <li><a class="vb" th:href="@{/neveritems}">Cards with 'Never' status</a></li>
+		
+		<li><a class="vb" href="#" id="btncol" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Frameworks<span class="caret"></span></a>
+			<ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btncol">
+				<div th:each="fmw : ${frameworks}" th:remove="tag">
+					<li><a class="vb" style="white-space: nowrap;" th:text="| &nbsp; &nbsp; ${fmw.name}|" th:href="@{|/fcexitems/${fmw.id}/framework|}"/></li>
+				</div>
+			</ul>
+		</li>
+		<li><a class="vb" href="#" id="btncol2" data-toggle="collapse" data-target="#submenu2" aria-expanded="false">Topics<span class="caret"></span></a>
+			<ul class="nav collapse" id="submenu2" role="menu" aria-labelledby="btncol2">
+				<div th:each="fmw : ${topics}" th:remove="tag">
+					<li><a class="vb" style="white-space: nowrap;" th:text="| &nbsp; &nbsp; ${fmw.name} &nbsp; &nbsp;(&nbsp;${fmw.framework}&nbsp;)|" th:href="@{|/fcexitems/${fmw.id}/topic|}"/></li>
+				</div>
+			</ul>
+		</li>
+
+		<li><a class="vb" href="#" id="btncol3" data-toggle="collapse" data-target="#submenu3" aria-expanded="false">Risks<span class="caret"></span></a>
+			<ul class="nav collapse" id="submenu3" role="menu" aria-labelledby="btncol3">
+				<div th:each="fmw : ${risks}" th:remove="tag">
+					<li><a class="vb" style="white-space: nowrap;" th:text="| &nbsp; &nbsp; ${fmw.name}|" th:href="@{|/fcexitems/${fmw.id}/risk|}"/></li>
+				</div>
+			</ul>
+		</li>
+
+		<li><a class="vb" href="#" id="btncol4" data-toggle="collapse" data-target="#submenu4" aria-expanded="false">Tags<span class="caret"></span></a>
+			<ul class="nav collapse" id="submenu4" role="menu" aria-labelledby="btncol4">
+				<div th:each="fmw, iterStat : ${tags}" th:remove="tag">
+					<li><a class="vb" style="white-space: nowrap;" th:text="| &nbsp; &nbsp; ${fmw}|" th:href="@{|/fcexitems/${iterStat.index}/tag|}"/></li>
+				</div>
+			</ul>
+		</li>
+	</ul>
+</nav>
+
+  </div>
+  <div id="right">
+    <div class="">
+        <div class="">
+            <h4 th:text="${heading}">Upload</h4>
+        </div>
+        <a class="addn" th:href="@{/addfc}">new card</a>
+    </div>
+
+	<div class="">
+	    <div class="">
+	    		<div th:if="${criterVal}==0">
+	    			<br/><br/>
+	         	<div th:replace="fragments/showitemlist :: showitemlist (${criterVal}, '', 'flcd')"/>
+	         </div>
+	         <div th:if="${criterVal}==1">
+	         	<br/><br/>
+	         	<div th:replace="fragments/showitemlist :: showitemlist (${criterVal}, '', 'excd')"/>
+	         </div>
+	         
+	         <div th:if="${criterVal}==2">
+	         	<br/><br/>
+	         	<div th:replace="fragments/showitemlist :: showitemlist (0, 'Flashcards', 'flcd')"/>
+	         	<br/>
+	         	<div th:replace="fragments/showitemlist :: showitemlist (1, 'Example code cards', 'excd')"/>
+	         </div>
+	         
+		</div>
+	</div>
+	<div><a class="addn" th:href="@{/addfc}">new card</a></div>
+	<br/><br/><br/>
+	</div>
+	  </div>
+
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+	window.onload = function(){
+		var flt = document.getElementById("flcdnotext");
+		var ext = document.getElementById("excdnotext");
+		
+		if ( document.getElementsByName("flcd").length == 0) { 
+			if ( flt != null && flt !== "undefined") flt.innerHTML = "( no flashcards were found )";
+		}
+		
+		if ( document.getElementsByName("excd").length == 0) {
+			if ( ext != null && ext !== "undefined") ext.innerHTML = "( no example code cards were found )";
+		}		
+    }
+	/*]]>*/
+</script>
+    
+</body>
+
+<footer>
+	<div th:replace="fragments/footer :: footer"/>
+</footer>
+
+</html>

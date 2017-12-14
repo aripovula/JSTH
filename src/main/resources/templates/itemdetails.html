@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>jsth | card details</title>
+        <div th:replace="fragments/header :: header-css"/>
+    </head>
+    <body onload="PR.prettyPrint()">
+    <div th:replace="fragments/header :: header"/>
+	<div th:replace="fragments/otherfragments :: flash"></div>
+	<link rel="stylesheet" type="text/css" th:href="@{/prettify2/prettify.css}"></link>
+	<link rel="stylesheet" type="text/css" th:href="@{/prettify2/skins/desertlightblue.css}"></link>
+	<script type="text/javascript" th:src="@{/prettify2/prettify.js}"></script>
+
+<div class="container">
+
+	<h3>Details:</h3>
+	<br/><br/>	
+
+    <div style="font-size:14px; color:white">
+    			<div th:text="'Card ID: ' + ${fcexitem.id}"></div>
+    			<br/>
+    	        <div th:text="'Type: ' + ( (${fcexitem.type}==0) ? 'Flashcards' : 'Example code')" ></div>
+    	        <br/>
+	        <div th:text="'Tags: ' + ( (${fcexitem.tag} == '')? ' none' : ${fcexitem.tag})"></div>
+        		<br/>
+        		<span th:if="${fcexitem.risk} != null">
+            		<span style="font-size:14px">Risk: <a class="addn" th:href="@{|/risks/${fcexitem.risk.id}|}" th:text="${fcexitem.risk.name}"></a></span>
+            	</span>
+	        <span th:if="${fcexitem.risk} == null">
+	            <span style="font-size:14px">Risk: none</span>
+	        </span>            		
+    </div>
+    <br/>
+    
+    <div style="font-size:14px; color:white">
+    		<label>Topics:</label>
+    		<div th:each="topicid : ${fcexitem.topic}">
+			<div th:switch="${topicid}">
+				<span th:each="fw : ${topics}">
+					<span th:case="${fw.id}" th:text="| &nbsp;- &nbsp; ${fw.name} &nbsp; &nbsp;&nbsp; &nbsp;(&nbsp;${fw.framework}&nbsp;)|"></span>
+				</span>    			
+			</div>    			
+    		</div>
+    </div>
+    
+    <div class="">
+        <div class="">
+        		<br/>
+            <p>Question text:</p>
+            <pre class="prettyprint codearea" th:text="${fcexitem.first}"></pre>
+        </div>
+        <div class="section">
+            <p>Answer:</p>
+            <pre class="prettyprint codearea" th:text="${fcexitem.second}"></pre>
+        </div>
+    </div>
+    <br/>
+    
+    <div>
+    		<div>        
+            <div>
+                <div class="actions">
+                		<a href="javascript:window.location = document.referrer;" class="button button2">Done</a>
+                		<span style="display:inline-block; width: 10px;"></span>
+                    	<a class="button button2" th:href="@{|/fcexitems/${fcexitem.id}/edit|}">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/><br/><br/>
+</div>
+
+</body>
+<footer>
+	<div th:replace="fragments/footer :: footer"/>
+</footer>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8"/>
+<title>jsth | practice</title>
+<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+	<div th:replace="fragments/header :: header" />
+
+
+	<link rel="stylesheet" type="text/css" th:href="@{/prettify2/prettify.css}"></link>
+	<link rel="stylesheet" type="text/css" th:href="@{/prettify2/skins/desertlightblue.css}"></link>
+	<script type="text/javascript" th:src="@{/prettify2/prettify.js}"></script>
+	<div th:replace="fragments/otherfragments :: flash"></div>
+
+
+	<div class="" th:unless="${nonefound == 'nonefound'}">
+		<div class="container">
+			<div>
+				<form name="saveUserPrefs" th:action="@{${actionS}}" method="post" th:object="${user}">
+					<input type="hidden" th:field="*{id}" />
+					<input type="hidden" th:field="*{currentCardId}" id="currentcardid" />
+					<input type="hidden" th:field="*{fontSize}" id="fsize" />
+					<input type="hidden" th:field="*{skin}" id="prskin" />
+					<input type="hidden" th:field="*{pgDownNotAtBottom}" id="pgdownorbot" />
+					<input type="hidden" th:field="*{javaIde}" id="javaide" />
+					<div class="">
+						<div class="">
+							<h3>Practice</h3>
+							<span class="addn2"><a class="addn" href="javascript: viewCard()">View</a> | </span> 
+							<span class="addn2"><a class="addn" href="javascript: editCard()">Edit</a></span>
+							<br/><br/>
+						</div>
+					</div>
+
+					<div class="">
+						<div class="">
+							<div id="outputq2">
+								Question: &nbsp;
+								<span class="addn2"><a class="addn" href="javascript: copyQ();">copy Q</a> | </span>
+								<span class="addn2"><a class="addn" href="javascript: copySendQ();">copy Q + open IDE</a> | </span>
+								<span class="addn2"><a class="addn" href="javascript: copyQA();">copy Q+A</a> | </span>
+								<span class="addn2"><a class="addn" href="javascript: copySendQA();">copy Q+A + open IDE</a> | </span>
+								<span class="addn2"><a class="addn" href="javascript: editIDE();">edit IDE</a> | </span>
+								<span class="addn2"><a class="addn" href="javascript: IdeAlt();">how it works</a></span>
+							</div>
+							<span id="wh"></span>
+							<pre id="outputq" class="prettyprint"></pre>
+							<br/>
+
+							<div>
+								Answer: &nbsp;
+								<span class="addn2"><a class="addn" href="javascript: copyA();">copy A</a> | </span>
+								<span class="addn2"><a class="addn" href="javascript: copySendA();">copy A + open IDE</a> | </span>
+								<span class="addn2"><a class="addn" href="javascript: copyQA();">copy Q+A</a> | </span>
+								<span class="addn2"><a class="addn" href="javascript: copySendQA();">copy Q+A + open IDE</a> | </span>
+								<span class="addn2"><a class="addn" href="javascript: editIDE();">edit IDE</a> | </span>
+								<span class="addn2"><a class="addn" href="javascript: IdeAlt();">how it works</a></span>
+							</div>
+							<pre id="outputa" class="prettyprint"></pre>
+
+						</div>
+					</div>
+					
+				</form>
+				<span style="display:inline-block; width: 20px;"></span>
+				<span id="selnew" class="addn2"><a class="addn" href="javascript: selectCards()">new cards selection</a></span> 
+			</div>
+
+		</div>
+		<br/><br/><br/><br/><br/>
+
+		<div>
+			<form name="setFreqcy" th:action="@{${actionF}}" method="post" th:object="${user}">
+				<input type="hidden" th:field="*{id}" />
+				<input type="hidden" th:field="*{currentCardId}" id="currentcardid2" />
+				<input type="hidden" th:field="*{neversSeln}" id="neverseln" />
+			</form>
+		</div>
+		<div id="container"/>
+		<div class="bottompanel">
+			<span style="display:inline-block; width: 20px;"></span>
+			<span style="font-size: 15px; color: #ffffff" id="cardstats"></span>
+			<a class="lists" style="font-size: 15px" href="javascript: viewCard()">Other details</a>
+			
+			<div>
+				<span style="display:inline-block; width: 20px;"></span>
+				<a class="button button1" href="javascript: showPrev();">&#60;Previous</a> 
+				<a class="button button1" href="javascript: editCard()">Edit card</a>
+				<a class="button button1" href="javascript: setFrequency();">Never repeat</a>
+				<a class="button button1" href="javascript: showNextB();">Answer / Next &#62;</a>
+				<span id="tellSpace" class="addn2"/>
+				<a class="button button1" href="javascript: changeCss();" style="float: right;">Change skin</a>
+				<a class="button button1" href="javascript: changeSize();" style="float: right;">Change size</a>
+				<a id="pdorbot" class="button button1" href="javascript: pgDownOrBottom();" style="float: right;">To:Shift-page down</a>
+				<a id="savePrefs" class="button button1" href="javascript: saveUsrPrefs()" style="float: right;">Save settings</a>
+				<span class="addn2"><a id="ruleal" class="addn" style="float: right; bottom: 5px;" 
+					href="javascript: ruleAlert()"><br/>How it works &nbsp;</a></span>
+			</div>
+
+		</div>
+	</div>
+	<div class="container section" th:if="${nonefound == 'nonefound'}">
+		<p style="background-color:#ac4343; color:#f2e2e2; text-align:center; padding:8px 8px; border-radius:4px;">No cards are found ! Please make a new selection</p>
+		<br/>
+		<a class="addn" th:href="@{/customload}">New Card Selection</a>
+		<br/><br/>
+		<div class="section">
+			<center><img th:src="@{/images/warning.png}" alt="" border="0" align="middle" style="z-index:-1;"/></center>
+		</div>		
+	</div>
+
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+ 
+    	//document.getElementById('wh').innerHTML=i;	
+    
+    	var i;
+    	var i2 = 0; if ([[${user.skin}]] != null) i2 = [[${user.skin}]];
+    	var i3 = 0; if ([[${user.fontSize}]] != null ) i3 = [[${user.fontSize}]];
+    	var iPgDownNotAtBottom = [[${user.pgDownNotAtBottom}]];
+    	if ( iPgDownNotAtBottom == null || iPgDownNotAtBottom === "undefined") iPgDownNotAtBottom = 0;
+    	console.log("iPgDownNotAtBottom = "+iPgDownNotAtBottom);
+    	
+    	//  JAVA IDE URL
+    	var ideUrl = [[${user.javaIde}]];
+    	if ( ideUrl == null || ideUrl === "undefined") ideUrl = 'https://www.compilejava.net';
+    	console.log("ideUrl = "+ideUrl);
+
+    	
+    	// all cards in json format
+    	var cards = [[${cardsjsn}]];
+    	var parsedCards = ""; if ( cards.length > 1) parsedCards = JSON.parse(cards);
+    	console.log("cards = "+cards);
+    	
+    	// vars for determining what to show next
+    	var is2next = false;
+    	var isQshown = false;
+    	var isAfterEqualNLast = false;
+    	var secondSearchPosition=0;
+    	var bElement = document.getElementById("selnew");
+   
+	window.onload = function(){
+			
+		PR.prettyPrint();
+    		
+		var savePrefs = document.getElementById("savePrefs");
+		if (savePrefs != null && savePrefs !== "undefined") savePrefs.style.display = "none";
+		
+		if ([[${isNewSelection}]]) {
+			i = 0;
+		} else if (typeof(Storage) !== "undefined") {
+			
+			var ib = localStorage.getItem("currentid");
+			console.log('ib = '+ib);
+			i = parseInt(ib);
+			console.log('i = '+i);
+			if (isNaN(i) || i == null || i === "undefined") i = [[${user.currentCardId}]];
+		} else {
+			console.log('in else if not defined i = '+i);
+			i = [[${user.currentCardId}]];
+			console.log('in else if not defined i2 = '+i);
+		}
+		
+		
+		
+		if (parsedCards.length>i) {
+			showCurrent();
+		} else if (parsedCards.length>0) {
+			i=parsedCards.length-1;
+			showCurrent();
+		} else {
+			document.getElementById('outputq').innerHTML=PR.prettyPrintOne('Please make a new selection. Error: total cards - '+
+					parsedCards.length+' while saved current card # is '+i, 'java');
+			document.getElementById('outputa').innerHTML=PR.prettyPrintOne('', 'java');
+		}
+		
+		// apply settings
+		applySize();
+		applySkin();
+		updatePgDownOrBottom();
+	}
+
+function updateStats() {
+	var typetext = parsedCards[i].type==0 ? 'Flashcard' : 'Example code';
+	var tagtext = parsedCards[i].tag == '' ? ' none' : parsedCards[i].tag;
+	var st = i+1+'/'+parsedCards.length+' | ID: '+ parsedCards[i].id +' | Type: '+ typetext + ' | Framework: Java OCP | Tags: ' + tagtext + ' | ';
+	document.getElementById('cardstats').innerHTML=st;
+}
+
+function editCard() {
+	var pth = /*[[@{/fcexitems/}]]*/;
+	var href = pth + parsedCards[i].id+'/edit';
+	window.location=href;
+}
+
+function viewCard() {
+	var pth = /*[[@{/fcexitem/}]]*/;
+	var href = pth + parsedCards[i].id;
+	window.location=href;
+}
+
+function selectCards() {
+	var href = /*[[@{/customload}]]*/;;
+	window.location=href;	
+}
+
+function showPrev() {
+    if (i === 0) { 
+        i = parsedCards.length; 
+    }
+    i = i - 1; 
+    localStoreCurrentId();
+    showCurrent();
+}
+
+function showCurrent() {
+	console.log('i='+i);
+	var first = parsedCards[i].first;
+	var second = parsedCards[i].second;
+		
+	document.getElementById('outputq').innerHTML=PR.prettyPrintOne(first, 'java');
+	
+	if (isAfterEqualNLast == true) is2next = true;
+	
+	if (isQshown == true) { 
+		secondSearchPosition = second.indexOf("$%" , secondSearchPosition+1);
+		var nlast = second.lastIndexOf("$%");
+		if (secondSearchPosition > -1) {
+			second2 = second.substring(1, secondSearchPosition - 1);
+			if (secondSearchPosition == nlast) isAfterEqualNLast = true;
+		} else {
+			second2 = second;
+			is2next = true;
+		}
+
+		do {
+			second2 = second2.replace("$%", ""); 
+		} while (second2.indexOf("$%")>-1);
+		
+		document.getElementById('outputa').innerHTML=PR.prettyPrintOne(second2, 'java'); 
+	} else {
+		isQshown = true;
+		document.getElementById('outputa').innerHTML=PR.prettyPrintOne('', 'java');
+	}
+	
+	PR.prettyPrint();
+	updateStats();
+	console.log('iPgDownNotAtBottom='+iPgDownNotAtBottom);
+	if (iPgDownNotAtBottom == 0) window.scrollBy(0, 40);
+	if (iPgDownNotAtBottom == 1) window.scrollBy(0, 160);
+	if (iPgDownNotAtBottom == 2) bElement.scrollIntoView();
+}
+
+function showNext() {
+	
+	if (is2next) {
+	    i = i + 1; 
+	    i = i % parsedCards.length;
+	    localStoreCurrentId();
+	    is2next = false;
+	    isQshown = false;
+	    secondSearchPosition = 0;
+	    isAfterEqualNLast = false;
+	}
+	showCurrent();
+}
+
+function showNextB() {
+	document.getElementById('tellSpace').innerHTML = "or press 'Space' button";
+	showNext();
+}
+
+
+function localStoreCurrentId() {
+	if (typeof(Storage) !== "undefined") {
+		localStorage.setItem('currentid', i);
+	}
+}
+
+function setFrequency() {
+	var nevers = [[${user.neversSeln}]];
+	if (nevers==null) nevers='';
+	if (nevers.length>0) {nevers = nevers + ','+parsedCards[i].id;}
+	else { nevers = parsedCards[i].id;}
+	localStoreCurrentId();
+	document.getElementById('currentcardid2').value = i;
+	document.getElementById('neverseln').value = nevers;
+	alert("This card is added to your learned cards list !");
+	document.setFreqcy.submit();
+}
+
+function ruleAlert(){
+	alert("'Space' button of the keyboard can be used instead of clicking on 'Answer/Next'.\n\nBy default page is set to 'Manual scroll' option and natural scrolling specific to your browser takes place when 'Space' is pressed on this option.\n\nIf 'Shift-Page down' option is selected auto page down takes place when 'Space' is pressed and pressing on 'Shift' button also works as 'Page down'.\n\nIf 'Auto-at bottom' is selected page is always auto scrolled to bottom of the scroll area.\n\nChanged settings are not restored next time you open this page unless you click on 'Save settings'.");
+}
+
+function IdeAlt(){
+	alert("For security reasons this site does not provide Java IDE.\n\nHowever, you can copy the code to clipboard ( e.g. copyQ copies question and etc. ) to test in your local Java IDE or copy and open an online IDE.\n\nDefault online Java IDE is https://www.compilejava.net/ \n\nYou can edit default online IDE by clicking 'edit IDE'.\n\nWhen you change default IDE 'Save settings' button will appear at the bottom - please click this button to save changes.\n\nInstead of clicking links you can use keyboard buttons as follows:\n\nq - copyQ      w - copy Q + open IDE\n\na - copyA       s - copy A + open IDE\n\nz - copyQA     x - copy A+Q + open IDE");
+}
+
+function pgDownOrBottom() {
+	iPgDownNotAtBottom = iPgDownNotAtBottom + 1;
+	if (iPgDownNotAtBottom > 2) iPgDownNotAtBottom = 0;
+	savePrefs.style.display = "block";
+	updatePgDownOrBottom();
+}
+
+function updatePgDownOrBottom() {
+	if (iPgDownNotAtBottom == 0) document.getElementById('pdorbot').innerHTML = "Manual scroll";
+	if (iPgDownNotAtBottom == 1) document.getElementById('pdorbot').innerHTML = "Shift-page down";
+	if (iPgDownNotAtBottom == 2) document.getElementById('pdorbot').innerHTML = "Auto-at bottom";	
+}
+
+function changeSize() {
+	i3 = i3 + 1;
+	if (i3>4) i3=0;
+	savePrefs.style.display = "block";
+	applySize();
+}
+
+function applySize() {
+	if (i3 == 3) {document.getElementById('outputq').style.fontSize = "small";document.getElementById('outputa').style.fontSize = "small";}
+	if (i3 == 4) {document.getElementById('outputq').style.fontSize = "medium";document.getElementById('outputa').style.fontSize = "medium";}
+	if (i3 == 0) {document.getElementById('outputq').style.fontSize = "large";document.getElementById('outputa').style.fontSize = "large";}
+	if (i3 == 1) {document.getElementById('outputq').style.fontSize = "x-large";document.getElementById('outputa').style.fontSize = "x-large";}	
+	if (i3 == 2) {document.getElementById('outputq').style.fontSize = "xx-large";document.getElementById('outputa').style.fontSize = "xx-large";}
+	
+	applySkin();
+}
+
+function changeCss() {
+	i2 = i2 + 1;
+	if (i2>6) i2=0;
+	savePrefs.style.display = "block";
+	applySkin();
+}
+
+function applySkin() {
+	console.log('applySkin i2 = '+ i2);
+	var skn = ["desertlightblue", "desertlight", "desert", "sunburst", "light", "blackonwhite", "coloronwhite"];
+	
+		var pth = /*[[@{/prettify2/skins/}]]*/;
+	   var link = '<link rel="stylesheet" type="text/css" href="'+pth+skn[i2]+'.css">';
+
+	   document.getElementById('wh').innerHTML=link;
+	   PR.prettyPrint();
+}
+
+function saveUsrPrefs() {
+	localStoreCurrentId();
+	document.getElementById('currentcardid').value = i;
+	document.getElementById('prskin').value = i2;
+	document.getElementById('fsize').value = i3;
+	document.getElementById('pgdownorbot').value = iPgDownNotAtBottom;
+	document.getElementById('javaide').value = ideUrl;
+
+	savePrefs.style.display = "none";
+	document.saveUserPrefs.submit();
+}
+
+function copyQ() {
+	copyGiven(parsedCards[i].first);
+}
+
+function copyA() {
+	copyGiven(parsedCards[i].second);
+}
+
+function copyQA() {
+	copyGiven(parsedCards[i].first+" "+parsedCards[i].second);
+}
+
+function copyGiven(val) {
+		var container = document.getElementById("container");
+		var inp = document.createElement("textarea");
+        container.appendChild(inp); 
+        inp.value = val;
+	  	inp.select();
+	  	document.execCommand("Copy");
+	  	container.removeChild(container.lastChild);
+}
+
+function copySendQ() {
+		copyQ();
+	  	var win = window.open(ideUrl, '_blank'); win.focus();
+}
+
+function copySendA() {
+		copyA();
+	  	var win = window.open(ideUrl, '_blank'); 	win.focus();
+}
+
+function copySendQA() {
+		copyQA();
+	  	var win = window.open(ideUrl, '_blank'); 	win.focus();
+}
+
+function editIDE() {
+    var t = prompt("Please add preferred online Java IDE", ideUrl);
+    if (t != null) {
+    		// web-url regex
+	    	var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+	    	var regex = new RegExp(expression);
+	    	if (t.match(regex)) {
+	    		ideUrl = t;
+	    		savePrefs.style.display = "block";
+	    	} else {
+	    	  alert("Please add valid website URL !");
+	    	  editIDE();
+	    	}
+    }
+}
+
+window.addEventListener("keydown", function (event) {
+	console.log('inKeyAny code='+event.keyCode);
+	console.log('inKeyAny key='+event.key);
+	
+	if (event.keyCode == 32) {
+	    	console.log('inKeyEnter');
+	    	document.getElementById('tellSpace').innerHTML = "";
+	    	showNext();
+	    	return false;
+	}
+	
+	if (event.key === "Shift") {
+	    	console.log('inKeyShift');
+	    	if (iPgDownNotAtBottom == 1) window.scrollBy(0, 140);
+	   
+	    	return false;
+	}
+
+	if (event.key === "q" || event.key === "Q") {
+    		copyQ(); 	return false;
+	}
+
+	if (event.key === "w" || event.key === "W") {
+		copySendQ(); 	return false;
+	}
+
+	if (event.key === "a" || event.key === "A") {
+		copyA(); 	return false;
+	}
+
+	if (event.key === "s" || event.key === "S") {
+		copySendA(); 	return false;
+	}
+
+	if (event.key === "z" || event.key === "Z") {
+		copyQA(); 	return false;
+	}
+
+	if (event.key === "x" || event.key === "X") {
+		copySendQA(); 	return false;
+	}
+
+}, true);
+
+	
+    /*]]>*/
+</script>
+
+</body>
+
+
+</html>

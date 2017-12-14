@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+</head>
+<body>
+     <script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    //console.log('hostname ='+location.hostname);
+    //console.log('referrer = ' + document.referrer.split('/')[2]);
+    //alert('referrer = ' + document.referrer.split('/')[2]);
+    /*]]>*/
+</script>
+
+<div th:fragment="flash" th:if="${flash != null}" class="container">
+    <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>
+</div>
+
+</body>
+</html>

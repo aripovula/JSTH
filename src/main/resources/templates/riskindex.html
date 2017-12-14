@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>jsth | risks</title>
+        <div th:replace="fragments/header :: header-css"/>
+    </head>
+    <body>
+    <div th:replace="fragments/header :: header"/>
+    	<div th:replace="fragments/otherfragments :: flash"></div>
+    <div class="container">
+        <div class="">
+            <div class="">
+				
+				<h3 style="text-align:left;">RISKS:</h3>            
+				<a class="addn" th:href="@{/risks/add}">new risk</a>
+            </div>
+            
+            <div class="">
+                
+            </div>
+        </div>
+        <br/><br/>
+        		<div th:if="${#lists.isEmpty(risks)}">
+			<label style="font-size:14px; color:#f2d768">No risks have been added yet</label><br/><br/>
+		</div>
+        
+        <div class=""></div>
+        <div class="">
+            <div th:each="cat,iterStat : ${risks}" >
+            		<p class="oneline" th:text="${cat.name}"></p>
+            		<div class="addn2 oneline">
+                		<span class="addn2"><a class="addn" th:href="@{|/risks/${cat.id}|}">view</a></span> |
+                		
+                		<span th:if="${cat.user} == ${currentuser}">
+						<span class="addn2"><a class="addn" th:href="@{|/risks/${cat.id}/edit|}"> edit risk</a></span>
+	                </span>
+	                <span th:unless="${cat.user} == ${currentuser}">
+						<span class="addn2"><a class="addn" href="javascript: alert('You can only edit risks added by you !');">read only</a></span>
+	                </span>
+                		
+                		
+                    
+                </div>
+                <br/>
+            </div>
+        </div>
+        <br/>
+    		<div>
+    			<a class="addn" th:href="@{/risks/add}">new risk</a>
+    		</div>
+    		<br/><br/>
+    </div>
+</body>
+<footer>
+	<div th:replace="fragments/footer :: footer"/>
+</footer>
+
+</html>

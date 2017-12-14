@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>jsth | a risk</title>
+        <div th:replace="fragments/header :: header-css"/>
+    </head>
+    <body>
+    <div th:replace="fragments/header :: header"/>
+	<div th:replace="fragments/otherfragments :: flash"></div>
+    <div class="container">
+        <h3>Risk details:</h3>
+        <br/>
+        <p th:text="'Name: '+${risk.name}" style="color:#f2d768"></p>
+        <br/>
+
+	    <div th:text="'Risk ID: ' + ${risk.id}"></div>
+	    		<br/>
+	    		<p>Topics:</p>
+	    		<div th:each="topicid : ${risk.topic}">
+				<div th:switch="${topicid}">
+					<span th:each="fw : ${topics}">
+						<span th:case="${fw.id}" th:text="| &nbsp;- &nbsp; ${fw.name} &nbsp; &nbsp;&nbsp; &nbsp;(&nbsp;${fw.framework}&nbsp;)|"></span>
+					</span>    			
+				</div>    			
+	    		</div>
+
+       
+       <p><br/><br/>List of associated flashcards / example code:<br/></p>
+        
+       <p th:text="${isEmpty}? '( no items have been added for this risk )'"></p>
+        
+        <div class="">
+            <div th:each="card,iterStat : ${risk.cards}">
+            		<p class="lists oneline" th:style="${iterStat.odd}? 'color:#f2d768'" th:text="${card.first}"></p>
+            		<a class="addn" th:href="@{|/fcexitem/${card.id}|}">View</a>
+            		<br/><br/>
+            </div>
+        </div>
+    
+    <br/>
+    
+    <div>
+    		<a class="button button1" th:href="@{/risks}">Done</a>
+    </div>
+    </div>
+    <br/><br/><br/>
+</body>
+<footer>
+	<div th:replace="fragments/footer :: footer"/>
+</footer>
+
+</html>

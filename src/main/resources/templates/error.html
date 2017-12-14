@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+    <link rel="stylesheet" th:href="@{/css/custom2.css}" href="../../css/custom2.css" />
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+
+<div>
+
+    <div class="container">
+        <h1>Something went wrong !</h1>
+        <label class="fieldWarning">Welcome !</label>
+        <br/>
+        <label class="fieldWarning">Sorry, there is some error in our pages or you don't have access to this page !</label>
+    </div>
+
+</div>
+
+
+	<img th:src="@{/images/macindark1.jpg}" alt="" border="0" style="position: fixed;right: 0px;bottom: 0px;z-index:-1;"/>
+</body>
+</html>

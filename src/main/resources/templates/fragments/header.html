@@ -1,0 +1,127 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<meta charset="UTF-8"/>
+	<link rel="icon" th:href="@{/favicon.ico}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    
+
+    <div th:fragment="header-css">
+
+		<!-- general BS CSS -->        
+       	<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css}"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+
+		<!-- BS CSS for menu only -->
+        <link rel="stylesheet" th:href="@{/css/jquery.smartmenus.bootstrap.css}"/>
+
+		<!-- customized BS CSS -->
+        <link rel="stylesheet" th:href="@{/css/custom.css}" href="../../css/custom.css" />
+              
+         <link href='https://fonts.googleapis.com/css?family=Assistant' rel='stylesheet'/>
+
+	<!-- jQuery is used for menu only -->              
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!-- SmartMenus jQuery plugin -->
+    <script type="text/javascript" th:src="@{/menulibsonly/jquery.smartmenus.js}"></script>
+
+    <!-- SmartMenus jQuery Bootstrap Addon -->
+    <script type="text/javascript" th:src="@{/menulibsonly/jquery.smartmenus.bootstrap.js}"></script>
+              
+    </div>
+</head>
+<body>
+<div th:fragment="header">
+        <!--img src="../images/snowwide.png" alt="" border="0" style="position:absolute; TOP:30px; LEFT:0px;z-index:-1;"/-->
+
+    
+      <!-- Navbar fixed top -->
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Java Prep</a>
+          </div>
+          <div class="navbar-collapse collapse">
+          
+            <!-- Left nav -->
+            <ul class="nav navbar-nav">
+              <li><a href="#">About <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a th:href="@{/welcome}">Welcome to webapp</a></li>
+                  <li><a th:href="@{/resume}">Personal info</a></li>
+                  <li><a th:href="@{/appsummary}">App summary</a></li>
+                  <li><a th:href="@{/sourcecode}">Source code</a></li>
+                </ul>
+              </li>
+
+              <li><a href="#">View<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a th:href="@{/flashcards}">Flashcards</a></li>
+                  <li><a th:href="@{/examples}">Example code cards</a></li>
+                  <li><a th:href="@{/allcards}">All cards</a></li>
+                  <li><a th:href="@{/mycards}">All my cards</a></li>
+                  <li><a th:href="@{/risks}">All risks</a></li>
+                </ul>
+              </li>
+
+              <li><a href="#">Add<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a th:href="@{/addfc}">Add new card</a></li>
+                  <li><a th:href="@{/risks/add}">Add new risk</a></li>
+                </ul>
+              </li>
+              
+              <li><a th:href="@{/customload}">Select<!--span class="caret"></span--></a></li>
+              
+            	<li><a th:href="@{/usecards}">Practice</a></li>
+
+            </ul>
+          
+            <!-- Right nav -->
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="javascript: document.logoutForm.submit();">Logout</a></li>
+            </ul>
+          
+          </div>
+        </div>
+      </div>
+
+
+    
+     <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+      	<input hidden="true" type="submit" value="Sign Out"  th:name="${_csrf.parameterName}"
+  			th:value="${_csrf.token}"/>
+   	</form> 
+    
+</div>
+
+
+    <!-- jQuery -->
+    <script type="text/javascript" th:src="@{/libs/jquery/jquery.js}"></script>
+
+    <!-- SmartMenus jQuery plugin -->
+    <script type="text/javascript" th:src="@{/jquery.smartmenus.js}"></script>
+
+    <!-- SmartMenus jQuery Keyboard Addon -->
+    <script type="text/javascript" th:src="@{/addons/keyboard/jquery.smartmenus.keyboard.js}"></script>
+
+    <!-- SmartMenus jQuery init -->
+    <script type="text/javascript">
+    	$(function() {
+    		$('#main-menu').smartmenus({
+    			subMenusSubOffsetX: 1,
+    			subMenusSubOffsetY: -8
+    		});
+    		$('#main-menu').smartmenus('keyboardSetHotkey', '123', 'shiftKey');
+    	});
+    </script>
+    
+</body>
+</html>
