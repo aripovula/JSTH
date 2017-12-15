@@ -26,10 +26,8 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
-	
 	private static Logger myLogger = Logger
 			.getLogger(FCExItemController.class.getName());
-
 	
 	@GetMapping(value={"/", "/login"})
 	public String login(Model model) {

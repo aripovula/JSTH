@@ -346,7 +346,7 @@ function showCurrent(i) {
 	var name = parsedCode[i].name;
 	var code = parsedCode[i].content;
 	var ext = name.split('.').pop();
-	console.log('ext='+ext);
+	//console.log('ext='+ext);
 	
 	if (name.endsWith('.html')) {
 		
@@ -385,7 +385,7 @@ function addLinks(){
 		aTag.style.fontSize = "14px";
 		aTag.className="vb";
 	
-		console.log('parsedCode[i].parent = '+ parsedCode[i].parent);
+		//console.log('parsedCode[i].parent = '+ parsedCode[i].parent);
 		if ((parsedCode[i].parent.indexOf('.properties') !== -1) || (parsedCode[i].parent.indexOf('.xml') !== -1)) props.appendChild(aTag);
 		if ((parsedCode[i].name.indexOf('sthfApplication.java') !== -1) || (parsedCode[i].name.indexOf('ervletInitializer.java') !== -1)) mains.appendChild(aTag);
 		if (parsedCode[i].parent.indexOf('/config/') !== -1) configs.appendChild(aTag);
@@ -492,22 +492,22 @@ function changeCss() {
 }
 
 function applySkin() {
-	console.log('applySkin i2 = '+ i2);
+	//console.log('applySkin i2 = '+ i2);
 	var skn = ["desertlightblue", "desertlight", "desert", "sunburst", "light", "blackonwhite", "coloronwhite"];
 		var pth = /*[[@{/prettify2/skins/}]]*/;
 	   var link = '<link rel="stylesheet" type="text/css" href="'+pth+skn[i2]+'.css">';
-	   console.log('link = '+ link);
+	   //console.log('link = '+ link);
 	   document.getElementById('wh').innerHTML=link;
 	   PR.prettyPrint();
 }
 
 
 window.addEventListener("keydown", function (event) {
-	console.log('inKeyAny code='+event.keyCode);
-	console.log('inKeyAny key='+event.key);
+	//console.log('inKeyAny code='+event.keyCode);
+	//console.log('inKeyAny key='+event.key);
 	
 	if (event.keyCode == 32) {
-	    	console.log('inKeyEnter');
+	    //console.log('inKeyEnter');
 	    	
 	    	toggleOneOrFour();
 	    	document.getElementById('orspace').innerHTML = "";

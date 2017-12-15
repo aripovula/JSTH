@@ -125,18 +125,18 @@
     	var i3 = 0; if ([[${user.fontSize}]] != null ) i3 = [[${user.fontSize}]];
     	var iPgDownNotAtBottom = [[${user.pgDownNotAtBottom}]];
     	if ( iPgDownNotAtBottom == null || iPgDownNotAtBottom === "undefined") iPgDownNotAtBottom = 0;
-    	console.log("iPgDownNotAtBottom = "+iPgDownNotAtBottom);
+    	//console.log("iPgDownNotAtBottom = "+iPgDownNotAtBottom);
     	
     	//  JAVA IDE URL
     	var ideUrl = [[${user.javaIde}]];
     	if ( ideUrl == null || ideUrl === "undefined") ideUrl = 'https://www.compilejava.net';
-    	console.log("ideUrl = "+ideUrl);
+    	//console.log("ideUrl = "+ideUrl);
 
     	
     	// all cards in json format
     	var cards = [[${cardsjsn}]];
     	var parsedCards = ""; if ( cards.length > 1) parsedCards = JSON.parse(cards);
-    	console.log("cards = "+cards);
+    	//console.log("cards = "+cards);
     	
     	// vars for determining what to show next
     	var is2next = false;
@@ -157,14 +157,14 @@
 		} else if (typeof(Storage) !== "undefined") {
 			
 			var ib = localStorage.getItem("currentid");
-			console.log('ib = '+ib);
+			//console.log('ib = '+ib);
 			i = parseInt(ib);
-			console.log('i = '+i);
+			//console.log('i = '+i);
 			if (isNaN(i) || i == null || i === "undefined") i = [[${user.currentCardId}]];
 		} else {
-			console.log('in else if not defined i = '+i);
+			//console.log('in else if not defined i = '+i);
 			i = [[${user.currentCardId}]];
-			console.log('in else if not defined i2 = '+i);
+			//console.log('in else if not defined i2 = '+i);
 		}
 		
 		
@@ -220,7 +220,7 @@ function showPrev() {
 }
 
 function showCurrent() {
-	console.log('i='+i);
+	//console.log('i='+i);
 	var first = parsedCards[i].first;
 	var second = parsedCards[i].second;
 		
@@ -251,7 +251,7 @@ function showCurrent() {
 	
 	PR.prettyPrint();
 	updateStats();
-	console.log('iPgDownNotAtBottom='+iPgDownNotAtBottom);
+	//console.log('iPgDownNotAtBottom='+iPgDownNotAtBottom);
 	if (iPgDownNotAtBottom == 0) window.scrollBy(0, 40);
 	if (iPgDownNotAtBottom == 1) window.scrollBy(0, 160);
 	if (iPgDownNotAtBottom == 2) bElement.scrollIntoView();
@@ -341,7 +341,7 @@ function changeCss() {
 }
 
 function applySkin() {
-	console.log('applySkin i2 = '+ i2);
+	//console.log('applySkin i2 = '+ i2);
 	var skn = ["desertlightblue", "desertlight", "desert", "sunburst", "light", "blackonwhite", "coloronwhite"];
 	
 		var pth = /*[[@{/prettify2/skins/}]]*/;
@@ -417,18 +417,18 @@ function editIDE() {
 }
 
 window.addEventListener("keydown", function (event) {
-	console.log('inKeyAny code='+event.keyCode);
-	console.log('inKeyAny key='+event.key);
+	//console.log('inKeyAny code='+event.keyCode);
+	//console.log('inKeyAny key='+event.key);
 	
 	if (event.keyCode == 32) {
-	    	console.log('inKeyEnter');
+	    //	console.log('inKeyEnter');
 	    	document.getElementById('tellSpace').innerHTML = "";
 	    	showNext();
 	    	return false;
 	}
 	
 	if (event.key === "Shift") {
-	    	console.log('inKeyShift');
+	    	//console.log('inKeyShift');
 	    	if (iPgDownNotAtBottom == 1) window.scrollBy(0, 140);
 	   
 	    	return false;

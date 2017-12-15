@@ -227,7 +227,7 @@
 		    			if (iy == 0 ) {	if ( warntype != null && warntype !== "undefined") warntype.style.display = "none"; }
 		    			
 		    			if (iy==1) {
-		    				console.log("in checkLabels iy==1 elem="+document.forms['cardform'].elements[elem[iy]]);
+		    				//console.log("in checkLabels iy==1 elem="+document.forms['cardform'].elements[elem[iy]]);
 		    				var curTop = ','+parsedTopics[i2].id+',';
 		    				if ( parsedRisks != null && parsedRisks !== "undefined") {
 			    				for (var i7 = 0; i7 < parsedRisks.length; i7++) {
@@ -238,12 +238,12 @@
 				    				topInd = topInd.replace(" ", "");
 				    				topInd = ','+topInd+',';
 				    				
-				    				console.log('topInd-'+topInd+'  curTop-'+curTop);
-				    				console.log('condi: '+topInd.indexOf(curTop));
+				    				//console.log('topInd-'+topInd+'  curTop-'+curTop);
+				    				//console.log('condi: '+topInd.indexOf(curTop));
 					    	    		if (topInd.indexOf(curTop) !== -1) {
 					    	    			i8 = i8 + 1;
 					    		    		var rpiece = document.getElementById('riskpiece'+ii7);
-					    		    		console.log('ii7='+ii7);
+					    		    		//console.log('ii7='+ii7);
 					    		    		if ( rpiece != null && rpiece !== "undefined") rpiece.style.display = "block";
 					    	    		}
 				    			}
@@ -253,7 +253,7 @@
 		    				
 			    			var ab = document.getElementById('fmlabl'+i2).textContent;
 		    				cardframeworks = cardframeworks + ab.trim()+",";
-		    				console.log('cardframeworks = '+cardframeworks);
+		    				//console.log('cardframeworks = '+cardframeworks);
 		    				if ( warnfm != null && warnfm !== "undefined") warnfm.style.display = "none"; 
 		    			}
 	
@@ -268,7 +268,7 @@
 		}
 	    	if (i8>0) {  document.getElementById('riskLab').style.display = "none";document.getElementById('riskSec').style.display = "block";  }
 	    	else {  document.getElementById('riskLab').style.display = "block";document.getElementById('riskSec').style.display = "none";  } 
-	    	console.log("SelnValue="+frameworkseln);
+	    	//console.log("SelnValue="+frameworkseln);
 
 	}
 	

@@ -312,7 +312,7 @@
 	}
 	
     function updateTopics(){
-		console.log("in updateTopics fmsseln="+fmsseln);
+		//console.log("in updateTopics fmsseln="+fmsseln);
 	    	
     		for (var i6 = 0; i6 < parsedTopics.length; i6++) {
 	    		var ii6 = parsedTopics[i6].id;
@@ -394,7 +394,7 @@
 			    			if (iy==9) {
 			    				warnfm.style.display = "block"; 
 			    				fmseln.innerHTML = '&nbsp; ( none )'; 
-			    				if ( allFms == 0 ) {fm0.style.display = "block"; fm0shown = true; console.log("allFms2 ="+allFms); }
+			    				if ( allFms == 0 ) {fm0.style.display = "block"; fm0shown = true; }
 			    			}
 			    		} else if ( iy==9 && fmseln != null && fmseln !== "undefined" ) {
 			    			fmseln.innerHTML = '&nbsp; &nbsp; '+fmsseln;

@@ -186,7 +186,7 @@ public class FCExItemController {
 		userTemp.setLoadTypeSeln("5");
 		
 		List<FCExItem> fcs = sortEngine.generateCards(userTemp);
-		myLogger.info("===========>>>>>>>>>>> IN SORT-ENGINE  sent fcs.size = "+fcs.size());
+		//myLogger.info("===========>>>>>>>>>>> IN SORT-ENGINE  sent fcs.size = "+fcs.size());
 		model = addDuplicatedToModel(model, fcs, principal, 2);
 		model.addAttribute("heading", "All cards for topic: "+Topic.values()[topicId].name);
 
