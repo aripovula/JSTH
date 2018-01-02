@@ -186,7 +186,7 @@ public class FCExItemController {
 		userTemp.setLoadTypeSeln("5");
 		
 		List<FCExItem> fcs = sortEngine.generateCards(userTemp);
-		//myLogger.info("===========>>>>>>>>>>> IN SORT-ENGINE  sent fcs.size = "+fcs.size());
+		//myLogger.info("===========>>>>>>>>>>> IN CARD CONTROLLER  sent fcs.size = "+fcs.size());
 		model = addDuplicatedToModel(model, fcs, principal, 2);
 		model.addAttribute("heading", "All cards for topic: "+Topic.values()[topicId].name);
 
@@ -279,15 +279,18 @@ public class FCExItemController {
 		User user;
 		String isFound = "found";
 		String cardsjsn = "";
+		
 		// in this app class User deals with user preferences and UserAuth deals with registered users
 		// checks if user has any saved preferences
+		
 		if (userService.existsByName(currentUser)) {
 			long currentUserId = userService.idByName(currentUser);
 			user = userService.findById(currentUserId);
 			
 			List<FCExItem> fcs = sortEngine.generateCards(user);
-			cardsjsn = sortEngine.getCardsInJSONformat(fcs);			
-			
+			cardsjsn = sortEngine.getCardsInJSONformat(fcs);	
+			cardsjsn = cardsjsn.replaceAll("\\<", "&#60;").replaceAll("\\>","&#62;").replaceAll("\\&", "&amp;");
+			//myLogger.info("===========>>>>>>>>>>> cardsjsn = "+cardsjsn);
 			if (fcs.size() == 0 || fcs.get(0) == null) isFound = "nonefound";  
 		} else {
 			user = new User();
@@ -297,6 +300,7 @@ public class FCExItemController {
 		model.addAttribute("nonefound", isFound);
 		model.addAttribute("cardsjsn", cardsjsn);
 		model.addAttribute("user", user);
+		model.addAttribute("frameworksjsn", sortEngine.getFrameworksInJSONformat());
 		model.addAttribute("actionS", "/savesettings");
 		model.addAttribute("actionF", "/frequency");
 		model.addAttribute("isNewSelection", sortEngine.isNewSelection());

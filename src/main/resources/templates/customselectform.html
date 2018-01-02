@@ -430,9 +430,8 @@
 	}
 	
 	function clearAllFms(){
-	    for (var i=0, len = frameworkSeln.length; len>i; i++) { 
-	    		var ii2 = i + 1;
-	    		frameworkSeln[ii2].checked = false;
+	    for (var i=0, len = frameworkSeln.length; len>i; i++) {
+	    		frameworkSeln[i].checked = false;
 		}
 	    labelfm.style.color = '#f2d768';
 	    warnfm.style.display = "block";

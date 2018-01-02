@@ -1,0 +1,103 @@
+&#60;?xml version="1.0" encoding="UTF-8"?&#62;
+&#60;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&#62;
+	&#60;modelVersion&#62;4.0.0&#60;/modelVersion&#62;
+
+	&#60;groupId&#62;com.jsthf&#60;/groupId&#62;
+	&#60;artifactId&#62;jsth&#60;/artifactId&#62;
+	&#60;version&#62;0.0.1-SNAPSHOT&#60;/version&#62;
+	&#60;packaging&#62;war&#60;/packaging&#62;
+
+	&#60;name&#62;JSTHF&#60;/name&#62;
+	&#60;description&#62;FCs for Java+Spring+others&#60;/description&#62;
+
+	&#60;parent&#62;
+		&#60;groupId&#62;org.springframework.boot&#60;/groupId&#62;
+		&#60;artifactId&#62;spring-boot-starter-parent&#60;/artifactId&#62;
+		&#60;version&#62;1.5.8.RELEASE&#60;/version&#62;
+		&#60;relativePath/&#62; &#60;!-- lookup parent from repository --&#62;
+	&#60;/parent&#62;
+
+	&#60;properties&#62;
+		&#60;project.build.sourceEncoding&#62;UTF-8&#60;/project.build.sourceEncoding&#62;
+		&#60;project.reporting.outputEncoding&#62;UTF-8&#60;/project.reporting.outputEncoding&#62;
+		&#60;java.version&#62;1.8&#60;/java.version&#62;
+	&#60;/properties&#62;
+
+	&#60;dependencies&#62;
+		&#60;dependency&#62;
+			&#60;groupId&#62;org.springframework.boot&#60;/groupId&#62;
+			&#60;artifactId&#62;spring-boot-starter-aop&#60;/artifactId&#62;
+		&#60;/dependency&#62;
+		&#60;dependency&#62;
+			&#60;groupId&#62;org.springframework.boot&#60;/groupId&#62;
+			&#60;artifactId&#62;spring-boot-starter-data-jpa&#60;/artifactId&#62;
+		&#60;/dependency&#62;
+		&#60;dependency&#62;
+			&#60;groupId&#62;org.springframework.boot&#60;/groupId&#62;
+			&#60;artifactId&#62;spring-boot-starter-security&#60;/artifactId&#62;
+		&#60;/dependency&#62;
+		&#60;dependency&#62;
+			&#60;groupId&#62;org.springframework.session&#60;/groupId&#62;
+			&#60;artifactId&#62;spring-session&#60;/artifactId&#62;
+		&#60;/dependency&#62;
+		
+		&#60;dependency&#62;
+			&#60;groupId&#62;org.springframework.session&#60;/groupId&#62;
+			&#60;artifactId&#62;spring-session-jdbc&#60;/artifactId&#62;
+		&#60;/dependency&#62;
+		
+		&#60;dependency&#62;
+			&#60;groupId&#62;org.springframework.boot&#60;/groupId&#62;
+			&#60;artifactId&#62;spring-boot-starter-thymeleaf&#60;/artifactId&#62;
+		&#60;/dependency&#62;
+		&#60;!--dependency&#62;
+			&#60;groupId&#62;org.springframework.boot&#60;/groupId&#62;
+			&#60;artifactId&#62;spring-boot-starter-web&#60;/artifactId&#62;
+		&#60;/dependency--&#62;
+
+		&#60;!-- marked the embedded servlet container as provided--&#62;
+		&#60;dependency&#62;
+			&#60;groupId&#62;org.springframework.boot&#60;/groupId&#62;
+			&#60;artifactId&#62;spring-boot-starter-tomcat&#60;/artifactId&#62;
+			&#60;scope&#62;provided&#60;/scope&#62;
+		&#60;/dependency&#62;
+
+		&#60;dependency&#62;
+			&#60;groupId&#62;mysql&#60;/groupId&#62;
+			&#60;artifactId&#62;mysql-connector-java&#60;/artifactId&#62;
+			&#60;scope&#62;runtime&#60;/scope&#62;
+		&#60;/dependency&#62;
+		&#60;dependency&#62;
+			&#60;groupId&#62;org.springframework.boot&#60;/groupId&#62;
+			&#60;artifactId&#62;spring-boot-starter-tomcat&#60;/artifactId&#62;
+			&#60;scope&#62;provided&#60;/scope&#62;
+		&#60;/dependency&#62;
+		&#60;dependency&#62;
+			&#60;groupId&#62;org.springframework.boot&#60;/groupId&#62;
+			&#60;artifactId&#62;spring-boot-starter-test&#60;/artifactId&#62;
+			&#60;scope&#62;test&#60;/scope&#62;
+		&#60;/dependency&#62;
+		&#60;dependency&#62;
+			&#60;groupId&#62;org.springframework.security&#60;/groupId&#62;
+			&#60;artifactId&#62;spring-security-test&#60;/artifactId&#62;
+			&#60;scope&#62;test&#60;/scope&#62;
+		&#60;/dependency&#62;
+		&#60;dependency&#62;
+		    &#60;groupId&#62;com.google.code.gson&#60;/groupId&#62;
+		    &#60;artifactId&#62;gson&#60;/artifactId&#62;
+		    &#60;version&#62;2.8.2&#60;/version&#62;
+		&#60;/dependency&#62;
+	&#60;/dependencies&#62;
+
+	&#60;build&#62;
+		&#60;plugins&#62;
+			&#60;plugin&#62;
+				&#60;groupId&#62;org.springframework.boot&#60;/groupId&#62;
+				&#60;artifactId&#62;spring-boot-maven-plugin&#60;/artifactId&#62;
+			&#60;/plugin&#62;
+		&#60;/plugins&#62;
+	&#60;/build&#62;
+
+
+&#60;/project&#62;

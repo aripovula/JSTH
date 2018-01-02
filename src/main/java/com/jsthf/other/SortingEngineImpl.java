@@ -18,9 +18,11 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.ui.Model;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jsthf.controller.FCExItemController;
 import com.jsthf.model.FCExItem;
 import com.jsthf.model.Risk;
@@ -354,13 +356,28 @@ public class SortingEngineImpl implements SortingEngine {
 	public String getCardsInJSONformat(List<FCExItem> fcs) {
 		List collection = new ArrayList();
 		for (FCExItem fc : fcs) {
+			String framework = fc.getFrameworkSeln().toString();
+			framework = framework.replaceAll("\\[", "").replaceAll("\\]","").replaceAll("\\s", "");
 			collection.add(new Cards(fc.getId(), fc.getFirst(), fc.getSecond(),
-					fc.getType(), fc.getTag()));
+					fc.getType(), fc.getTag(), fc.getUser(), framework));
 		}
 
+		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+		return gson.toJson(collection);
+	}
+	
+	@Override
+	public String getFrameworksInJSONformat() {
+
+		List<FMWorks> collection = new ArrayList();
+		for (Framework fc : Framework.values()) {
+			collection.add(new FMWorks(fc.id, fc.name));
+		}
+	
 		Gson gson = new Gson();
 		return gson.toJson(collection);
 	}
+
 
 	@Override
 	public String getTopicsInJSONformat() {
@@ -506,6 +523,7 @@ public class SortingEngineImpl implements SortingEngine {
 
 				if (fname.startsWith(".")) is2add = false;
 				if (fname.endsWith(".jpg") || fname.endsWith(".png") || fname.endsWith(".ico")) is2add = false;
+				if (fname.endsWith(".txt")) is2add = false;
 				if (relative.contains("/images/")) is2add = false;
 				if (relative.contains("/prettify2/")) is2add = false;
 				if (relative.contains("/menulibsonly/")) is2add = false;
@@ -525,10 +543,8 @@ public class SortingEngineImpl implements SortingEngine {
 				    }
 				    String result = contentBuilder.append("\n").append("\n").toString();
 				    
-				    // prepare *.html files
-				    if (fname.endsWith(".html")) {
-				    		result = result.replaceAll("\\<", "&#60;").replaceAll("\\>","&#62;").replaceAll("\\&", "&amp;");
-				    }
+				    // escape html special characters
+				    	result = result.replaceAll("\\<", "&#60;").replaceAll("\\>","&#62;").replaceAll("\\&", "&amp;");
 				    
 				    // mask JDBC username and password
 				    int ix1 = 26 + result.indexOf("spring.datasource.username"); 
@@ -558,10 +574,27 @@ public class SortingEngineImpl implements SortingEngine {
 			Gson gson = new Gson();
 			return gson.toJson(collection);
 	}
+	
+	@Override
+	public String getSourceCodeFromFile(String thePath) {
+		StringBuilder contentBuilder = new StringBuilder();
+		try {
+			File file = new ClassPathResource(thePath).getFile();
+			String path = file.toURI().getPath();
+			Stream<String> stream = Files.lines( Paths.get(path), StandardCharsets.UTF_8);
+			stream.forEach(s -> contentBuilder.append(s).append("\n"));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+				
+		return contentBuilder.toString();
+	}
+	
 
 }
 
-//  only constructors of the following four classes are used, getters and setters are not used
+//  only constructors of the following five classes are used, getters and setters are not used
 
 class Cards {
 	private long id;
@@ -569,14 +602,17 @@ class Cards {
 	private String second;
 	private String type;
 	private String tag;
+	private String user;
+	private String framework;
 
-	public Cards(long id, String first, String second, String type,
-			String tag) {
+	public Cards(long id, String first, String second, String type, String tag, String user, String framework) {
 		this.id = id;
 		this.first = first;
 		this.second = second;
+		this.framework = framework;
 		this.type = type;
 		this.tag = tag;
+		this.user = user;
 	}
 }
 
@@ -593,6 +629,16 @@ class RiskRep {
 		this.topic = topic;
 		this.frameworkId = frameworkId;
 		this.user = user;
+	}
+}
+
+class FMWorks {
+	private long id;
+	private String name;
+
+	public FMWorks(long id, String name) {
+		this.id = id;
+		this.name = name;
 	}
 }
 

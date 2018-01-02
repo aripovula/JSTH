@@ -1,4 +1,6 @@
 
+/*  this css is used to slightly change few pages - initially bs.css and custom.css are 
+applied and then body and footer are overridden in case of those few page */
 
 body {
 	background: #000000 !important;

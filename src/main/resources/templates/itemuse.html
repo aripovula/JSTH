@@ -31,7 +31,7 @@
 						<div class="">
 							<h3>Practice</h3>
 							<span class="addn2"><a class="addn" href="javascript: viewCard()">View</a> | </span> 
-							<span class="addn2"><a class="addn" href="javascript: editCard()">Edit</a></span>
+							<span id="edits1" class="addn2"><a class="addn" href="javascript: editCard()">Edit</a></span>
 							<br/><br/>
 						</div>
 					</div>
@@ -89,7 +89,7 @@
 			<div>
 				<span style="display:inline-block; width: 20px;"></span>
 				<a class="button button1" href="javascript: showPrev();">&#60;Previous</a> 
-				<a class="button button1" href="javascript: editCard()">Edit card</a>
+				<a id="edits2" class="button button1" href="javascript: editCard()">Edit card</a>
 				<a class="button button1" href="javascript: setFrequency();">Never repeat</a>
 				<a class="button button1" href="javascript: showNextB();">Answer / Next &#62;</a>
 				<span id="tellSpace" class="addn2"/>
@@ -137,6 +137,11 @@
     	var cards = [[${cardsjsn}]];
     	var parsedCards = ""; if ( cards.length > 1) parsedCards = JSON.parse(cards);
     	//console.log("cards = "+cards);
+
+    	var frameworksjsn = [[${frameworksjsn}]];
+    	var parsedFrameworks = ""; if ( frameworksjsn.length > 1) parsedFrameworks = JSON.parse(frameworksjsn);
+    	//console.log("cards = "+cards);
+
     	
     	// vars for determining what to show next
     	var is2next = false;
@@ -171,9 +176,11 @@
 		
 		if (parsedCards.length>i) {
 			showCurrent();
+			checkEditable();
 		} else if (parsedCards.length>0) {
 			i=parsedCards.length-1;
 			showCurrent();
+			checkEditable();
 		} else {
 			document.getElementById('outputq').innerHTML=PR.prettyPrintOne('Please make a new selection. Error: total cards - '+
 					parsedCards.length+' while saved current card # is '+i, 'java');
@@ -189,14 +196,27 @@
 function updateStats() {
 	var typetext = parsedCards[i].type==0 ? 'Flashcard' : 'Example code';
 	var tagtext = parsedCards[i].tag == '' ? ' none' : parsedCards[i].tag;
-	var st = i+1+'/'+parsedCards.length+' | ID: '+ parsedCards[i].id +' | Type: '+ typetext + ' | Framework: Java OCP | Tags: ' + tagtext + ' | ';
+	
+	var fmns = parsedCards[i].framework;
+	var frameworks = '';
+	var fmnrs = fmns.split(","), j;
+	for (j = 0; j < fmnrs.length; j++) {
+		var fmn = fmnrs[j];
+		frameworks = frameworks + parsedFrameworks[fmn].name +'; ';
+	}
+
+	var st = i+1+'/'+parsedCards.length+' | ID: '+ parsedCards[i].id +' | Type: '+ typetext + ' | Framework: '+frameworks+' | Tags: ' + tagtext + ' | ';
 	document.getElementById('cardstats').innerHTML=st;
 }
 
 function editCard() {
-	var pth = /*[[@{/fcexitems/}]]*/;
-	var href = pth + parsedCards[i].id+'/edit';
-	window.location=href;
+	if (parsedCards[i].user != 'adm') {
+		var pth = /*[[@{/fcexitems/}]]*/;
+		var href = pth + parsedCards[i].id+'/edit';
+		window.location=href;
+	} else {
+		alert('You do not have edit rights on this card.\n\nUsers can only edit cards added by them !');
+	}
 }
 
 function viewCard() {
@@ -223,6 +243,14 @@ function showCurrent() {
 	//console.log('i='+i);
 	var first = parsedCards[i].first;
 	var second = parsedCards[i].second;
+		
+	//console.log('first = '+first+'  second = '+ second);
+	
+	var find = '&#60;';  var re = new RegExp(find, 'g');  first = first.replace(re, '<');  second = second.replace(re, '<');
+
+	var find = '&#62;';  var re = new RegExp(find, 'g');  first = first.replace(re, '>');  second = second.replace(re, '>');
+
+	var find = '&amp;';  var re = new RegExp(find, 'g');  first = first.replace(re, '&');  second = second.replace(re, '&');
 		
 	document.getElementById('outputq').innerHTML=PR.prettyPrintOne(first, 'java');
 	
@@ -268,7 +296,18 @@ function showNext() {
 	    secondSearchPosition = 0;
 	    isAfterEqualNLast = false;
 	}
+	checkEditable();
 	showCurrent();
+}
+
+function checkEditable(){
+	if (parsedCards[i].user == 'adm') {
+		document.getElementById('edits1').innerHTML = '<a class="addn" href="javascript: editCard()">Read only</a>';
+		document.getElementById('edits2').innerHTML = "Read only";
+	} else {
+		document.getElementById('edits1').innerHTML = '<a class="addn" href="javascript: editCard()">Edit</a>';
+		document.getElementById('edits2').innerHTML = "Edit card";		
+	}
 }
 
 function showNextB() {
@@ -318,17 +357,16 @@ function updatePgDownOrBottom() {
 
 function changeSize() {
 	i3 = i3 + 1;
-	if (i3>4) i3=0;
+	if (i3>3) i3=0;
 	savePrefs.style.display = "block";
 	applySize();
 }
 
 function applySize() {
-	if (i3 == 3) {document.getElementById('outputq').style.fontSize = "small";document.getElementById('outputa').style.fontSize = "small";}
-	if (i3 == 4) {document.getElementById('outputq').style.fontSize = "medium";document.getElementById('outputa').style.fontSize = "medium";}
-	if (i3 == 0) {document.getElementById('outputq').style.fontSize = "large";document.getElementById('outputa').style.fontSize = "large";}
-	if (i3 == 1) {document.getElementById('outputq').style.fontSize = "x-large";document.getElementById('outputa').style.fontSize = "x-large";}	
-	if (i3 == 2) {document.getElementById('outputq').style.fontSize = "xx-large";document.getElementById('outputa').style.fontSize = "xx-large";}
+	if (i3 == 0) {document.getElementById('outputq').style.fontSize = "small";document.getElementById('outputa').style.fontSize = "small";}
+	if (i3 == 1) {document.getElementById('outputq').style.fontSize = "medium";document.getElementById('outputa').style.fontSize = "medium";}
+	if (i3 == 2) {document.getElementById('outputq').style.fontSize = "large";document.getElementById('outputa').style.fontSize = "large";}
+	if (i3 == 3) {document.getElementById('outputq').style.fontSize = "x-large";document.getElementById('outputa').style.fontSize = "x-large";}	
 	
 	applySkin();
 }

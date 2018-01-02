@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 	<meta charset="UTF-8"/>
-	<!--link rel="icon" th:href="@{/favicon.ico}"/-->
+	<link rel="icon" th:href="@{/favicon.ico}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     
 
@@ -33,7 +33,7 @@
 </head>
 <body>
 <div th:fragment="header">
-        <!--img src="../images/snowwide.png" alt="" border="0" style="position:absolute; TOP:30px; LEFT:0px;z-index:-1;"/-->
+        <!--img src="../images/hny2.png" alt="" border="0" style="position:absolute; TOP:30px; LEFT:800px;z-index:-1;"/-->
 
     
       <!-- Navbar fixed top -->
@@ -96,8 +96,8 @@
 
     
      <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
-      	<!--input hidden="true" type="submit" value="Sign Out"  th:name="${_csrf.parameterName}"
-  			th:value="${_csrf.token}"/-->
+      	<input hidden="true" type="submit" value="Sign Out"  th:name="${_csrf.parameterName}"
+  			th:value="${_csrf.token}"/>
    	</form> 
     
 </div>

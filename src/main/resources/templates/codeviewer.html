@@ -119,8 +119,9 @@
  <div id="leftcontent">
  <nav>
     <ul class="nav">
-    		<li><a class="vb2" href="javascript: showAlert();">page info</a> </li>
-        		<li><a class="vb2" href="#" id="btncol1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">*.properties &#38; *.xml<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+    			<li><a class="vb2" href="javascript: showAlert();">page info</a> </li>
+    			<li><a class="vb2" href="javascript: showCurrent(1000);">pom.xml</a> </li>
+        		<li><a class="vb2" href="#" id="btncol1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">*.properties<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
 			<ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btncol1">
 				<li id="propsSec" style="white-space: nowrap;color:white;"></li>
 			</ul>
@@ -161,7 +162,7 @@
 				<li id="otherSec" style="white-space: nowrap;color:white;"></li>
 			</ul>
 		</li>
-		<li><a class="vb2" href="#" id="btncol9" data-toggle="collapse" data-target="#submenu9" aria-expanded="false">*.css &#38; *.js<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+		<li><a class="vb2" href="#" id="btncol9" data-toggle="collapse" data-target="#submenu9" aria-expanded="false">*.css<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
 			<ul class="nav collapse" id="submenu9" role="menu" aria-labelledby="btncol9">
 				<li id="cssjsSec" style="white-space: nowrap;color:white;"></li>
 			</ul>
@@ -174,6 +175,12 @@
 		<li><a class="vb2" href="#" id="btncol11" data-toggle="collapse" data-target="#submenu11" aria-expanded="false">templates&#47;fragments<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
 			<ul class="nav collapse" id="submenu11" role="menu" aria-labelledby="btncol11">
 				<li id="fragmentSec" style="white-space: nowrap;color:white;"></li>
+			</ul>
+		</li>
+
+		<li><a class="vb2" href="#" id="btncol12" data-toggle="collapse" data-target="#submenu12" aria-expanded="false">all unit test<span style="font-size:10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+			<ul class="nav collapse" id="submenu12" role="menu" aria-labelledby="btncol12">
+				<li id="testSec" style="white-space: nowrap;color:white;"></li>
 			</ul>
 		</li>
 		
@@ -287,11 +294,10 @@
 			var cssjs = document.getElementById("cssjsSec");
 			var templates = document.getElementById("templateSec");
 			var fragments = document.getElementById("fragmentSec");
-
+			var tests = document.getElementById("testSec");
 
 			var wscrn = "TL";
 			var isSplit = true;
-			
 			
 			var single;
 			var pTag;
@@ -302,6 +308,11 @@
     	// all cards in json format
     	var allCodeInJsonFormat = [[${allCodeInJsonFormat}]];
     	var parsedCode = JSON.parse(allCodeInJsonFormat);
+
+    	var pom = [[${pom}]];
+    	//console.log('pom = '+pom);
+    	//var parsedCode = JSON.parse(allCodeInJsonFormat);
+
     	
 	window.onload = function(){
 
@@ -343,21 +354,25 @@
 	}
 	
 function showCurrent(i) {
-	var name = parsedCode[i].name;
-	var code = parsedCode[i].content;
-	var ext = name.split('.').pop();
-	//console.log('ext='+ext);
 	
-	if (name.endsWith('.html')) {
-		
-		var find = '&#60;';  var re = new RegExp(find, 'g');  code = code.replace(re, '<');
-
-		var find = '&#62;';  var re = new RegExp(find, 'g');  code = code.replace(re, '>');
-
-		var find = '&amp;';  var re = new RegExp(find, 'g');  code = code.replace(re, '&');
-		
+	if (i == 1000) {
+		var name = 'pom.xml';
+		var code = pom;
+		var ext = 'xml';
+	} else {
+		var name = parsedCode[i].name;
+		var code = parsedCode[i].content;
+		var ext = name.split('.').pop();		
 	}
-		
+	//console.log(code);
+
+	if (ext != 'xml') {
+		var find = '&#60;';  var re = new RegExp(find, 'g');  code = code.replace(re, '<');
+	
+		var find = '&#62;';  var re = new RegExp(find, 'g');  code = code.replace(re, '>');
+	
+		var find = '&amp;';  var re = new RegExp(find, 'g');  code = code.replace(re, '&');
+	}
 
 	if (isSplit == true ) {
 		if ( wscrn == 'TL' && ulsc != null && ulsc !== "undefined")  { ulsc.innerHTML=PR.prettyPrintOne(code, ext); ulr.innerHTML='&nbsp;&nbsp;Upper-L : '+name+'&nbsp;&nbsp;&nbsp;&nbsp;';}
@@ -397,7 +412,7 @@ function addLinks(){
 		if ((parsedCode[i].parent.indexOf('/static/css/') !== -1) || (parsedCode[i].parent.indexOf('/static/js/') !== -1)) cssjs.appendChild(aTag);
 		if ((parsedCode[i].parent.indexOf('/templates/') !== -1) && (parsedCode[i].parent.indexOf('/fragments/') === -1)) templates.appendChild(aTag);
 		if ((parsedCode[i].parent.indexOf('/templates/') !== -1) && (parsedCode[i].parent.indexOf('/fragments/') !== -1)) fragments.appendChild(aTag);
-		
+		if (parsedCode[i].parent.indexOf('/test/') !== -1) tests.appendChild(aTag);
 	}	
 }
 

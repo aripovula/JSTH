@@ -25,7 +25,7 @@
 	        <div th:text="'Tags: ' + ( (${fcexitem.tag} == '')? ' none' : ${fcexitem.tag})"></div>
         		<br/>
         		<span th:if="${fcexitem.risk} != null">
-            		<span style="font-size:14px">Risk: <a class="addn" th:href="@{|/risks/${fcexitem.risk.id}|}" th:text="${fcexitem.risk.name}"></a></span>
+            		<span style="font-size:14px">Risk: <a class="lnk" th:href="@{|/risks/${fcexitem.risk.id}|}" th:text="${fcexitem.risk.name}"></a></span>
             	</span>
 	        <span th:if="${fcexitem.risk} == null">
 	            <span style="font-size:14px">Risk: none</span>

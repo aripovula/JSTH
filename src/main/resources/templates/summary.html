@@ -22,7 +22,7 @@
 				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Spring Security <br/>
 				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  JPA, Hibernate<br/>
 				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  MySQL<br/>
-				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Google gson ( for generating data in JSON format )<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Google Gson ( for generating data in JSON format )<br/>
 				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Maven<br/>
 				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Eclipse Oxygen<br/>				         
 
@@ -41,23 +41,40 @@
 				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  JQuery was used for animations<br/>
 				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Googles' Code Prettify library ( https://github.com/google/code-prettify ) was used to display any source code, flashcards and example code<br/>
 				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Other resources / libraries were used to create 'Personal info' ( resum&#233; ) page and source code viewer with resizable split screens<br/>
-			         </ul>
-			         </div>
-			         
-			<p class="section">This app is NOT a copy / paste of an existing application. 
+			        </ul>
+			        			<p class="section">( When coding the practice mode, initially I was planning to submit forms via AJAX using Jackson library for handling json data. And later, I decided that sending json data to javascript through Thymeleaf ( one way json data exchange through Spring's Model model ) would be more efficient approach as form for editing cards is available in another template view )</p>
+			        <p class="section">In testing the app followings were used:</p>
+			        	<ul>
+			        		 <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  JUnit 4<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Mockito<br/>
+				         <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  Hamcrest Matchers<br/>
+			        </ul>
+			        <p class="section">Summary of unit tests and service integration tests:</p>
+			        	<div class="section">
+						<img th:src="@{/images/unittests.png}" alt="" width="1000"  border="0" style="padding-right: 40px;"/>
+					</div>
+			        
+			    </div>
+			     
+		<div id="div4" style="display:none;">    
+			
+			<h4 class="section">This app is NOT a copy / paste</h4> 
+	        <p class="section">This app is NOT a copy / paste of an existing application. 
 	        It was developed by me ( I deployed Spring BOOT app and added all classes and templates myself ).</p>
 	        <p class="section">Earlier,  I developed a Java Swing based version of the same app and decided to develop it as an MVC app.</p>
-	        <p class="section">Images of my Java Swing (GUI) based app's main pages are shown below.</p>
+	        	<p class="section">Images of my Java Swing (GUI) based app's main pages are shown below.</p>
 	        
-	        <p class="section">I used following tutorial to incorporate Spring Security into the application ( clickable ):</p>- 
-	        <a class="lnk" target="_blank" href="https://medium.com/@gustavo.ponce.ch/spring-boot-spring-mvc-spring-security-mysql-a5d8545d837d">Spring Security - example code</a>
-	        
-	        <br/>
-			<p class="section">To code page for viewing source code of this application ( next option in menu section 'About' ) I combined code in three sources ( clickable ):</p>-
-			<a class="lnk" target="_blank" href="https://jsfiddle.net/h3cvm2ws/">page with four resizable screens</a><br/>- 
-			<a class="lnk" target="_blank" href="https://jsfiddle.net/gstvoo/zoxqpftc/">Bootstrap vertical multi-level menu</a>, and<br/>- 
-			<a class="lnk" target="_blank" href="http://jsfiddle.net/wQ6WQ/1/">two vertical scrollable divs</a>
-	        <br/>
+	        <p class="section">I used following tutorial to incorporate Spring Security into the application ( clickable link ):</p> 
+	        <ul>
+		        <span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span> 
+		        <a class="lnk" target="_blank" href="https://medium.com/@gustavo.ponce.ch/spring-boot-spring-mvc-spring-security-mysql-a5d8545d837d">Spring Security - example code</a>
+	        </ul>
+			<p class="section">To code page for viewing source code of this application ( next option in menu section 'About' ) I combined code in three sources ( clickable links ):</p>
+			<ul>
+				<span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  <a class="lnk" target="_blank" href="https://jsfiddle.net/h3cvm2ws/">page with four resizable screens</a><br/> 
+				<span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  <a class="lnk" target="_blank" href="https://jsfiddle.net/gstvoo/zoxqpftc/">Bootstrap vertical multi-level menu</a>, and<br/> 
+				<span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  <a class="lnk" target="_blank" href="http://jsfiddle.net/wQ6WQ/1/">two vertical scrollable divs</a>
+	        </ul>
 	        <p class="section">( links to other pages of StackOverflow and other sites that have helped me in developing this app are provided after two images below )</p>
 	        <p class="section">Images of my Java Swing (GUI) based app's main pages :</p>
 	        <p class="section">( as can be seen in image below I have around 2000 flashcards and example codes already added in my local database to improve my knowledge of Java and related frameworks and to get prepared for my Oracle certified Java Professional certification exam [ Java OCP &nbsp; - &nbsp;  Oracle exam # 1z0 - 809 ] )</p>      
@@ -72,20 +89,29 @@
 				</div>
 					    
 			</div>
-			<br/>
-			<p class="section">Links to other pages of StackOverflow and other sites that have helped me in developing this app ( clickable ) :</p>-
-			<a class="lnk" target="_blank" href="https://stackoverflow.com/questions/248562/when-using-spring-security-what-is-the-proper-way-to-obtain-current-username-i">proper way to obtain current username</a><br/>- 
-			<a class="lnk" target="_blank" href="http://www.baeldung.com/csrf-thymeleaf-with-spring-security">CSRF Protection with Spring MVC and Thymeleaf</a><br/>- 
-			<a class="lnk" target="_blank" href="https://stackoverflow.com/a/35309194/6332774">better way of defining 'application.properties'</a><br/>-
-			
-			<a class="lnk" target="_blank" href="https://docs.spring.io/spring-boot/docs/current/reference/html/howto-security.html">effect of switching off the Spring Boot security configuration</a><br/>-
-			<a class="lnk" target="_blank" href="https://stackoverflow.com/a/35309194/6332774">set up Hibernate using only 'application.properties'</a><br/>-
-			<a class="lnk" target="_blank" href="https://stackoverflow.com/questions/30870146/transactional-annotation-not-working-in-spring-boot">clarification re using @Transactional</a><br/>-
-			<a class="lnk" target="_blank" href="https://codingexplained.com/coding/java/spring-framework/return-boolean-value-from-spring-data-jpa-query">to check if User table exists - returning boolean from a @Query</a>
-						
+			<ul>
+				<p class="section">Links to SUBSET of other pages of StackOverflow and other sites that have helped me MOST in developing this app ( clickable link ) :</p>
+				
+				<span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  
+				<a class="lnk" target="_blank" href="https://stackoverflow.com/questions/248562/when-using-spring-security-what-is-the-proper-way-to-obtain-current-username-i">proper way to obtain current username</a><br/> 
+				<span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  
+				<a class="lnk" target="_blank" href="http://www.baeldung.com/csrf-thymeleaf-with-spring-security">CSRF Protection with Spring MVC and Thymeleaf</a><br/>
+				<span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  
+				<a class="lnk" target="_blank" href="https://stackoverflow.com/a/35309194/6332774">better way of defining 'application.properties'</a><br/>
+				<span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  
+				<a class="lnk" target="_blank" href="https://docs.spring.io/spring-boot/docs/current/reference/html/howto-security.html">effect of switching off the Spring Boot security configuration</a><br/>
+				<span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  
+				<a class="lnk" target="_blank" href="https://stackoverflow.com/a/35309194/6332774">set up Hibernate using only 'application.properties'</a><br/>
+				<span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  
+				<a class="lnk" target="_blank" href="https://stackoverflow.com/questions/30870146/transactional-annotation-not-working-in-spring-boot">clarification re using @Transactional</a><br/>
+				<span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  
+				<a class="lnk" target="_blank" href="https://codingexplained.com/coding/java/spring-framework/return-boolean-value-from-spring-data-jpa-query">to check if User table exists - returning boolean from a @Query</a><br/>
+				<span class="glyphicon glyphicon-ok" style="color:#36a2ff; font-size:10px">&nbsp;</span>  
+				<a class="lnk" target="_blank" href="https://stackoverflow.com/questions/4147012/can-you-avoid-gson-converting-and-into-unicode-escape-sequences">avoiding Gson converting '&#60;' and '&#62;' into unicode escape sequences?</a>
+			</ul>	
 			<br/><br/>
 	        <br/><br/>
-	        
+	     </div> 
 	</div>
  
     <script type="text/javascript">
@@ -94,13 +120,7 @@
 	        $("#div1").fadeIn();
 	        $("#div2").fadeIn(2000);
 	        $("#div3").fadeIn(3000);
-
-		    $('.carousel').carousel({
-		        interval: 6000
-		    });
-		
-		    $('.carousel').carousel('cycle');
-		    
+	        $("#div4").fadeIn(5000);		    
 
 		});
 	</script> 
